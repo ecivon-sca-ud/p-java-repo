@@ -1,0 +1,71 @@
+import java.awt.*;
+import java.io.*;
+import javax.sound.sampled.*;
+import javax.swing.*;
+import javax.swing.border.Border;
+import java.util.Scanner;
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+       JFrame frame4= new JFrame();
+       frame4.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       frame4.setSize(720,600);
+       frame4.setVisible(true);
+       frame4.setLayout(new BorderLayout(10,10));
+
+        //Main panels.
+       JPanel panel1=new JPanel();
+       JPanel panel2=new JPanel();
+       JPanel panel3=new JPanel();
+       JPanel panel4=new JPanel();
+       JPanel panel5=new JPanel();
+
+       panel1.setBackground(Color.RED);
+       panel2.setBackground(Color.BLUE);
+       panel3.setBackground(Color.GREEN);
+       panel4.setBackground(Color.YELLOW);
+       panel5.setBackground(Color.WHITE);
+
+       panel1.setPreferredSize(new Dimension(100,100));
+       panel2.setPreferredSize(new Dimension(100,100));
+       panel3.setPreferredSize(new Dimension(100,100));
+       panel4.setPreferredSize(new Dimension(100,100));
+       panel5.setPreferredSize(new Dimension(100,100));
+         //Main panels above,sub panels below.
+        // For fun, let's make sub-panels to show that panel5(the middle one) can be used as a container for other panels.
+        JPanel panel6=new JPanel();
+        JPanel panel7=new JPanel();
+        JPanel panel8=new JPanel();
+        JPanel panel9=new JPanel();
+        JPanel panel10=new JPanel();
+
+        panel6.setBackground(Color.RED);
+        panel7.setBackground(Color.BLUE);
+        panel8.setBackground(Color.GREEN);
+        panel9.setBackground(Color.YELLOW);
+        panel10.setBackground(Color.WHITE);
+
+        panel6.setPreferredSize(new Dimension(50,50));
+        panel7.setPreferredSize(new Dimension(50,50));
+        panel8.setPreferredSize(new Dimension(50,50));
+        panel9.setPreferredSize(new Dimension(50,50));
+        panel10.setPreferredSize(new Dimension(50,50));
+        
+        panel5.setLayout(new BorderLayout());
+        panel5.add(panel6,BorderLayout.NORTH);
+        panel5.add(panel7,BorderLayout.EAST);
+        panel5.add(panel8,BorderLayout.SOUTH);
+        panel5.add(panel9,BorderLayout.WEST);
+        panel5.add(panel10,BorderLayout.CENTER);
+        /*
+        End of sub-panels. Absolutely unneccessary, but can be used to manually make a fractal pattern if you'd like!
+         */
+       frame4.add(panel1,BorderLayout.NORTH);
+       frame4.add(panel2,BorderLayout.EAST);
+       frame4.add(panel3,BorderLayout.SOUTH);
+       frame4.add(panel4,BorderLayout.WEST);
+       frame4.add(panel5,BorderLayout.CENTER);
+    }
+}
