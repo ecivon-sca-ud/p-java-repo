@@ -1,0 +1,44 @@
+import java.awt.*;
+import java.io.*;
+import javax.sound.sampled.*;
+import javax.swing.*;
+import javax.swing.border.Border;
+import java.util.Scanner;
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+        JLabel label1= new JLabel();
+        label1.setBackground(Color.RED);
+        label1.setOpaque(true);
+        label1.setBounds(100,100,100,100);
+
+        JLabel label2= new JLabel();
+        label2.setBackground(Color.GREEN);
+        label2.setOpaque(true);
+        label2.setBounds(50,50,100,100);
+
+        JLabel label3= new JLabel();
+        label3.setBackground(Color.BLUE);
+        label3.setOpaque(true);
+        label3.setBounds(10,10,100,100);
+        
+        JLayeredPane layeredPane1= new JLayeredPane();
+        layeredPane1.setBounds(0,0,300,300);
+        layeredPane1.add(label1,Integer.valueOf(2));
+        layeredPane1.add(label2,Integer.valueOf(1));
+        layeredPane1.add(label3,Integer.valueOf(0));
+        /*
+        The second parameter allows you to order them, starting from index zero, rather than memorizing the formal
+        name of each layer in the LayeredPane.
+         */
+        
+        JFrame frame7= new JFrame("JLayeredPane");
+        frame7.add(layeredPane1);
+        frame7.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame7.setSize(720,600);
+        frame7.setLayout(null);
+        frame7.setVisible(true);
+    }
+}
