@@ -1,0 +1,28 @@
+import java.awt.*;
+import java.io.*;
+import javax.sound.sampled.*;
+import javax.swing.*;
+import javax.swing.border.Border;
+import java.util.Scanner;
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+        JFrame frame6= new JFrame();
+        frame6.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame6.setSize(720,600);
+        frame6.setVisible(true);
+        frame6.setLayout(new GridLayout(3,3,10,10));
+        frame6.add(new JButton("1"));
+        frame6.add(new JButton("2"));
+        frame6.add(new JButton("3"));
+        frame6.add(new JButton("4"));
+        frame6.add(new JButton("5"));
+        frame6.add(new JButton("6"));
+        frame6.add(new JButton("7"));
+        frame6.add(new JButton("8"));
+        frame6.add(new JButton("9"));
+        frame6.add(new JButton("10"));
+    }
+}
