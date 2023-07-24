@@ -1,0 +1,74 @@
+//For Main.Java
+import java.awt.*;
+import java.io.*;
+import javax.sound.sampled.*;
+import javax.swing.*;
+import java.util.Scanner;
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+        MyFrame frame8= new MyFrame();
+    }
+}
+
+//For MyFrame.Java
+import javax.swing.JFrame;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.*;
+import java.util.Scanner;
+import javax.sound.sampled.*;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+public class MyFrame extends JFrame implements ActionListener
+{
+    JButton button1;
+    JTextField textfield1;
+    //These two need to be declared outside the constructor, else they'll be local to it and unrecognized by the 
+    //actionPerformed method below.
+    MyFrame() 
+    {
+        //First few specifications for JFrame below.
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setSize(600, 600);
+        this.setLayout(new FlowLayout());
+
+        button1 = new JButton("Submit");
+        button1.addActionListener(this);
+        //Initializing then relating your button to the overridden method below from ActionListener Interface.
+
+        textfield1 = new JTextField();
+        textfield1.setPreferredSize(new Dimension(500, 100));
+        textfield1.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        textfield1.setForeground(new Color(0x29975));
+        textfield1.setBackground(Color.BLACK);
+        textfield1.setCaretColor(Color.RED);
+        //This one is specificaly for the blinking cursor's colour.
+        textfield1.setText("Remove this text and replace with username");
+        //Above are the tricks that make the textfield unique.
+
+        //End of settings for JFrame below.
+        this.add(textfield1);
+        this.add(button1);
+        this.pack();
+        this.setVisible(true);
+        //End of settings for JFrame above.
+    }
+    
+    @Override
+    public void actionPerformed(ActionEvent e)
+    {
+        if (e.getSource()==button1)
+        {
+           System.out.println("Welcome. Your username \" "+textfield1.getText()+"\" has been successfully saved.");
+           textfield1.setEditable(false);
+           button1.setEnabled(false);
+           //Those two preceding lines of code prevent user from getting same input twice(button) or adding another username (textfield).
+        }
+    }
+}
