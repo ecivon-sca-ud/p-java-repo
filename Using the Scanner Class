@@ -1,0 +1,26 @@
+import java.util.Scanner;
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+        Scanner scanner= new Scanner(System.in);
+        System.out.println("Enter your name below.");
+        String name = scanner.nextLine();
+
+        System.out.println("Enter your age below.");
+        int age = scanner.nextInt();
+        scanner.nextLine();
+        /*This scanner.nextLine() looks pointless
+        , but without it the third input would be skipped by the scanner member function.
+        This nextLine is used to 'restart' the member fn to enable it read the 2nd string
+        from the user.*/
+
+        System.out.println("Enter the food you like below.");
+        String food = scanner.nextLine();
+
+        System.out.println("Thanks for your name ," +name+" .");
+        System.out.println("As a person who is "+age+ " years old,");
+        System.out.println("it seems you like " +food+" .Not bad!");
+    }
+}
