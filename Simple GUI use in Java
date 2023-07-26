@@ -1,0 +1,17 @@
+import javax.swing.JOptionPane;
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+        String name= JOptionPane.showInputDialog("Name?Enter below!");
+        JOptionPane.showMessageDialog(null,"Hello "+name+"! How ya doing?");
+
+        int age= Integer.parseInt(JOptionPane.showInputDialog("How about your age?Enter below!"));
+        JOptionPane.showMessageDialog(null,"Seems you're "+age+" years old. Good for you!");
+
+  double height= Double.parseDouble(JOptionPane.showInputDialog("Finally, enter your height in cm to get in m!"));
+        JOptionPane.showMessageDialog(null,"In metres, you are "+(height/100)+" metres tall.");
+    }
+
+}
