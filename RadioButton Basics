@@ -1,0 +1,57 @@
+//(Main.java is same as for past few examples, hence won’t be included again)
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.*;
+import java.util.Scanner;
+import javax.sound.sampled.*;
+
+public class MyFrame extends JFrame implements ActionListener
+{
+    JRadioButton pizzaButton,burgerButton,hotDogButton;
+
+    MyFrame()
+    {
+        //First few specifications for JFrame below.
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLayout(new FlowLayout());
+
+        pizzaButton= new JRadioButton("Pizza");
+        burgerButton= new JRadioButton("Hamburger");
+        hotDogButton= new JRadioButton("Hot Dog!");
+        pizzaButton.addActionListener(this);
+        burgerButton.addActionListener(this);
+        hotDogButton.addActionListener(this);
+
+
+        ButtonGroup group1= new ButtonGroup();
+        group1.add(pizzaButton);
+        group1.add(burgerButton);
+        group1.add(hotDogButton);
+
+        this.add(pizzaButton);
+        this.add(burgerButton);
+        this.add(hotDogButton);
+        this.pack();
+        this.setVisible(true);
+        //End of settings for JFrame above.
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e)
+    {
+        if (e.getSource()==pizzaButton)
+        {
+            System.out.println("You get pizza, my G.");
+        }
+        else if (e.getSource()==burgerButton)
+        {
+            System.out.println("You get a burger, bruv.");
+        }
+        else
+        {
+            System.out.println("Hot dog, hot dog, hot diggity dog!");
+        }
+    }
+}
