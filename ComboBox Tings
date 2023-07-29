@@ -1,0 +1,57 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.*;
+import java.util.Scanner;
+import javax.sound.sampled.*;
+
+public class MyFrame extends JFrame implements ActionListener
+{
+JComboBox comboBox1;
+    MyFrame()
+    {
+        this. setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLayout(new FlowLayout());
+
+        String[] animaux={"Dog","Cat","Rat"};
+        /*
+        NB: For any array you're making, use the wrapper class equivalent, since that's what will work
+        with comboboxes. So, use Integer as opposed to int (would throw an error if you tried),
+        Double over double, Character over char, Boolean over boolean and so on.
+         */
+        comboBox1= new JComboBox(animaux);
+        comboBox1.addActionListener(this);
+        comboBox1.setEditable(true);
+        //Allows user to type in what they want.
+        System.out.println(comboBox1.getItemCount()+" items to select from, dear user.");
+        //Shows user how many items are in combobox.
+
+        comboBox1.addItem("Chicken");
+        //Inserts item at end of list- as last index.
+
+        comboBox1.insertItemAt("",0);
+        //This adds an item to an index of your choosing.
+        comboBox1.setSelectedIndex(0);
+        //Default index to make visible in combobox when you start program.
+        comboBox1.removeItem("Chicken");
+        //Removes a specific item.
+        comboBox1.removeItemAt(0);
+        //More general removal- for whatever is at a specific index.
+        comboBox1.removeAllItems();
+        //Even more general- chucks everything from your combobox!
+
+        this.add(comboBox1);
+        this.pack();
+        this.setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e)
+    {
+        if (e.getSource()==comboBox1)
+        {
+            System.out.println(comboBox1.getSelectedItem());
+        }
+    }
+}
