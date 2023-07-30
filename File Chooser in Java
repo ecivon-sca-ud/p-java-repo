@@ -1,0 +1,45 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.*;
+import java.util.Scanner;
+import javax.sound.sampled.*;
+
+public class MyFrame extends JFrame implements ActionListener
+{
+JButton button1;
+    MyFrame()
+    {
+        button1= new JButton("Select file");
+        button1.addActionListener(this);
+
+        this.add(button1);
+        this. setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLayout(new FlowLayout());
+        this.pack();
+        this.setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e)
+    {
+        if(e.getSource()==button1)
+        {
+            JFileChooser choix1= new JFileChooser();
+            choix1.setCurrentDirectory(new File("C:\\Users\\Timo\\Desktop"));
+
+            int reponse1= choix1.showOpenDialog(null);
+            //This is used to allow user to selct file in computer.
+            // But to actually open it when double-clicked on...
+            if(reponse1==JFileChooser.APPROVE_OPTION)
+            //...you need an instance of file class linked to your selection,
+                // so that indeed your file does open.
+            {
+                File file1= new File(choix1.getSelectedFile().getAbsolutePath());
+                System.out.println("Success! FInd path of file chosen below:");
+                System.out.println(file1);
+            }
+        }
+    }
+}
