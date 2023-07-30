@@ -1,0 +1,45 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.*;
+import java.util.Scanner;
+import javax.sound.sampled.*;
+
+public class MyFrame extends JFrame implements ActionListener
+{
+JButton button1;
+JLabel label1;
+    MyFrame()
+    {
+        this. setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLayout(new FlowLayout());
+
+        button1= new JButton("Choose a color");
+        button1.addActionListener(this);
+
+        label1= new JLabel("Watch this text change colour, man!!");
+        label1.setBackground(Color.WHITE);
+        label1.setFont(new Font("Comic Sans",Font.BOLD,70));
+        label1.setOpaque(true);
+
+        this.add(button1);
+        this.add(label1);
+        this.pack();
+        this.setVisible(true);
+    }
+    @Override
+    public void actionPerformed(ActionEvent e)
+    {
+        if(e.getSource()==button1)
+        {
+            JColorChooser colorChoix= new JColorChooser();
+            Color color= JColorChooser.showDialog(null, "This is where you'll pick your color", Color.RED);
+            //This is what lets the user pick the colors.
+            //label1.setForeground(color);
+            //This affects text in label upon user's choice.
+            label1.setBackground(color);
+            //This affects background of label upon user's choice.
+        }
+    }
+}
