@@ -1,0 +1,83 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.*;
+import java.util.Scanner;
+import javax.sound.sampled.*;
+
+public class MyFrame extends JFrame implements MouseListener
+{
+JLabel label1;
+ImageIcon icon1,icon2,icon3,icon4;
+    MyFrame()
+    {
+        this. setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setSize(1000,1000);
+        this.setLayout(new FlowLayout());
+
+        label1= new JLabel();
+
+        icon1= new ImageIcon("un.png");
+        icon2= new ImageIcon("deux.jpeg");
+        icon3= new ImageIcon("trois.jpeg");
+        icon4= new ImageIcon("pizza.png");
+        
+        label1.setBounds(0,0,800,800);
+        label1.setBackground(Color.GREEN);
+        label1.setOpaque(true);
+        label1.addMouseListener(this);
+        label1.setIcon(icon1);
+
+        this.add(label1);
+        this.pack();
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e)
+    //Invoked when mouse button is pressed and released on a component in JFrame.
+    {
+        //System.out.println("Mouse clicked, my G.");
+        //label1.setBackground(Color.WHITE);
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e)
+    //Invoked when mouse button is pressed on a component in JFrame.
+    {
+        //System.out.println("Mouse pressed, my G.");
+        //label1.setBackground(Color.RED);
+        label1.setIcon(icon2);
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e)
+    //Invoked when mouse button is  released on a component in JFrame.
+    {
+        //System.out.println("Mouse released, my G.");
+        //label1.setBackground(Color.YELLOW);
+        label1.setIcon(icon3);
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e)
+    //Invoked when mouse button enters the area of a component in JFrame.
+    {
+        //System.out.println("Mouse entered label, my G.");
+        //label1.setBackground(Color.BLUE);
+        label1.setIcon(icon2);
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e)
+    //Invoked when mouse cursor leaves the area of a component in JFrame.
+    {
+        //System.out.println("Mouse went away, my G.");
+        //label1.setBackground(Color.GREEN);
+        label1.setIcon(icon4);
+    }
+}
