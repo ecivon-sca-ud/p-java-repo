@@ -1,0 +1,87 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.io.*;
+import java.util.Scanner;
+import javax.sound.sampled.*;
+
+public class MyFrame extends JFrame implements KeyListener
+{
+JLabel label1;
+ImageIcon icon1;
+    MyFrame()
+    {
+        this. setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setSize(600,600);
+        this.setLayout(null);
+
+        icon1= new ImageIcon("tick.png");
+
+        label1= new JLabel();
+        label1.setBounds(0,0,150,150);
+        label1.setIcon(icon1);
+
+        //label1.setBackground(Color.green);
+        //label1.setOpaque(true);
+
+        this.add(label1);
+        this.getContentPane().setBackground(Color.BLUE);
+        this.addKeyListener(this);
+        this.setVisible(true);
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e)
+    //This method is invoked when a key is typed.
+    //Uses KeyChar, char output.
+    {
+        switch(e.getKeyChar())
+        {
+            case 'a':
+                label1.setLocation(label1.getX()-10,label1.getY());
+                break;
+            case 'w':
+                label1.setLocation(label1.getX(),label1.getY()-10);
+                break;
+            case 's':
+                label1.setLocation(label1.getX()-10,label1.getY()+10);
+                break;
+            case 'd':
+                label1.setLocation(label1.getX()+10,label1.getY());
+                break;
+        }
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e)
+    //This method is invoked when a physical key is pressed down.
+    //Uses KeyCode, int output.
+    {
+        switch(e.getKeyCode())
+        {
+            case 37:
+                label1.setLocation(label1.getX()-10,label1.getY());
+                break;
+            case 38:
+                label1.setLocation(label1.getX(),label1.getY()-10);
+                break;
+            case 39:
+                label1.setLocation(label1.getX()+10,label1.getY());
+                break;
+            case 40:
+                label1.setLocation(label1.getX(),label1.getY()+10);
+                break;
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e)
+    //This method is invoked when a physical key is released.
+    //Uses KeyCode, int output.
+    {
+        System.out.println("You released key char "+e.getKeyChar());
+        System.out.println("The key released has  code "+e.getKeyCode());
+    }
+}
