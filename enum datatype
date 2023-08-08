@@ -1,0 +1,66 @@
+/*
+  enum= a datatype that comprises an ordered list of items in a collection.
+  They are created such that they act as a class' objects would,
+  in terms of instantiation (but notice difference in RHS) and in creation and use of 'constructors' within.
+*/
+enum Planet
+{
+    MERCURY(1),
+    VENUS(2),
+    EARTH(3),
+    MARS(4),
+    JUPITER(5),
+    SATURN(6),
+    URANUS(7),
+    NEPTUNE(8),
+    PLUTO(9);
+
+    /*
+    You needn't assign specific values to your data in the enum like this, but it's useful if you want something
+    more specific, like in our case showing how far each planet is from the Sun.
+
+    Notice the similarity below in using something constructor-like in our enum to enable the rest of this class
+    readily use numbers assigned to each piece of data.
+     */
+     
+    int number;
+
+    Planet (int number)
+    {
+        this.number=number;
+    }
+
+}
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+        Planet planet1= Planet.PLUTO;
+        canILiveHere(planet1);
+
+        Planet planet2= Planet.EARTH;
+        canILiveHere(planet2);
+    }
+
+    static void canILiveHere(Planet myPlanet)
+    {
+        switch(myPlanet)
+        {
+            case EARTH:
+            {
+                System.out.println( myPlanet+": You can live here, and indeed you most likely already do!");
+                System.out.println( myPlanet+" is planet # "+ myPlanet.number + " away from the Sun.");
+                System.out.println("");
+                break;
+            }
+            default:
+            {
+                System.out.println(myPlanet + ": You CANNOT live here- not yet anyway.");
+                System.out.println( myPlanet+" is planet # "+ myPlanet.number + " away from the Sun.");
+                System.out.println("");
+                break;
+            }
+        }
+    }
+}
