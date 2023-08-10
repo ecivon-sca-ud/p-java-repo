@@ -1,0 +1,49 @@
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+       /*
+       Review: An exception is an event that occurs after program execution which disrupts the flow of the program.
+       Examples of inbuilt Java exception handling mechanisms are
+       ArithmeticException and ArrayIndexOutOfBoundsException.
+
+       This program shows you how to customize the exceptions you're attempting to account for ahead of time.
+        */
+        Scanner scanner1= new Scanner(System.in);
+        System.out.println("Enter your age to see if you should be here or nah.");
+        int age= scanner1.nextInt();
+
+        try
+        {
+            checkAge(age);
+        }
+        catch(Exception e)
+        {
+            System.out.println(" Uh oh! "+ e);
+        }
+    }
+
+    static void checkAge(int age) throws AgeException
+    {
+        if (age<18)
+        {
+            throw new AgeException("\n "+"Sorry, need to be 18 or higher to sign up.");
+        }
+        else
+        {
+            System.out.println("All good, my G. Welcome!");
+        }
+    }
+}
+
+//For AgeException.java
+public class AgeException extends Exception
+{
+    AgeException(String message)
+    {
+        super(message);
+    }
+}
