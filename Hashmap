@@ -1,0 +1,62 @@
+import java.util.HashMap;
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+        /*
+        A HashMap is a data structure, just like arrays and Arraylists. The key difference is that this one uses
+        key-value pairs, making them convenient for storing two sets of closely related data, like countries and
+        their respective capitals. They are more user friendly in this sense, but for the programmer they need to:
+        1. use the import statement written above.
+        2. use a wrapper class, since you're looking to use a HashMap to store objects, which are also reference
+        datatypes, like the wrapper classes like Integer, Character,...
+         */
+
+        HashMap<String,String> countries= new HashMap<>();
+        countries.put("Kenya","Nairobi");
+        countries.put("Russia","Moscow");
+        countries.put("Japan","Tokyo");
+        countries.put("Canada","Ottawa");
+
+        System.out.println(countries);
+        //The basic way to show all your HashMap's data. We shall do slightly better aesthetically later though.
+        //Notice it puts them in alphabetical order, based on the key!
+
+        System.out.println(countries.size());
+        //The method in the print statement returns the number of key-value-pairs.
+
+        countries.remove("Russia");
+        //This removes a certain key and corresponding value from the HashMap.
+        System.out.println(countries);
+
+        System.out.println(countries.get("Kenya"));
+        //The method in the print statement returns a corresponding value to the key chosen.
+        System.out.println(countries.size());
+        //The method in the print statement returns the number of key-value-pairs.
+
+        //countries.clear();
+        //Removes every single key-value in your HashMap!
+
+        countries.replace("Kenya","Isiolo");
+        //Used to specify a specific key,then the value you wish to change it to.
+        System.out.println(countries);
+
+        System.out.println(countries.containsKey("Russia"));
+        System.out.println(countries.containsKey("Kenya"));
+        //This method checks if there's a certain key or not in your HashMap.
+        //Above is a F T case.
+        System.out.println(countries.containsValue("Nairobi"));
+        System.out.println(countries.containsValue("Isiolo"));
+        //This method checks if there's a certain value or not in your HashMap.
+        //Once again, above is a F T case.
+
+        //Remember how we wanted to show all the values more cleanly, though? Well, here's one way to do it.
+        System.out.println("COUNTRY\t"+"CAPITAL CITY");
+        for(String i: countries.keySet())
+        {
+            System.out.print(i+"\t");
+            System.out.println(countries.get(i));
+        }
+    }
+}
