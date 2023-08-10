@@ -1,0 +1,44 @@
+//For Main.java
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+       /*
+       Inner classes are exactly how they sound- it's when you put classes inside of classes.
+       So, why do this?
+       1. It's useful in grouping classes that are very closely related,
+       like those tied to certian listener interfaces (recall lesson with KeyBindings. Makes more sense now, right?)
+        They are typically made private though this isn't necessary
+        */
+        Outside outside1= new Outside();
+        //The outer class' contents is accessed the same old way...
+        Outside.Inside inside1= outside1.new Inside();
+        /*
+        ...but to make objects for inner class, you instantiate it with outer class' name, then dot operator,
+         then inner class' name and object's name on LHS.
+         On RHS, you write the outer class' object's name, then dot operator, then new inner_class'_name().
+         */
+
+        System.out.println(outside1.x+inside1.y);
+        //This uses the objects you created more directly and prints out the greeting.
+        inside1.Salamu();
+        //This also prints out the greeting, but by using the method we created in the inner class.
+        //Thankfully the syntax for accessing either class' method(s) seems about the same.
+    }
+}
+//For Outside.Java
+public class Outside
+{
+    String x= "Hello ";
+    public class Inside
+    {
+        String y= "world!";
+
+        public void Salamu()
+        {
+            System.out.println(x+y);
+        }
+    }
+    //Wow, a highly elablorate "Hello world!" if there ever was one.
+}
