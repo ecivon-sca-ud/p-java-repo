@@ -1,0 +1,42 @@
+//For Main.java
+public class Main
+{
+    public static void main(String[ ]args)
+    {
+      /*
+        Inner classes, as you'll recall, are useful in making the use of certain listener interfaces easier.
+        But their very creation can be made even easier by making said classes ANONYMOUS! Let's see how.
+        NB:These are especially useful if you know an inner class will only be used once at a time at run-time,
+        which makes sense with how a mouse works, for example.
+       */
+        Greeting greeting1= new Greeting();
+        greeting1.welcome();
+        //standard way of making objects and using methods tied to them. Now to use nameless inner classes!
+
+        Greeting greeting2= new Greeting()
+        {
+            @Override
+            public void welcome()
+            {
+                System.out.println("How ya doing?");
+            }
+        };
+        /*
+        New way involves overriding a method in your outer class.
+        Think about it: I know it's an inner class since only that or another class that I explicitly
+        said will extend Greeting could do this. But since I haven't defined the inner class within the outer
+        class itself, I realize I've just successfully made an unnamed/anonymous inner class!! :)
+         */
+
+        greeting2.welcome();
+    }
+}
+//For Greeting.java
+public class Greeting
+{
+    public void welcome()
+    {
+        System.out.println("Hello world!");
+    }
+}
+
