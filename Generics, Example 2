@@ -1,0 +1,91 @@
+//For Main.java
+import java.awt.*;
+import java.util.*;
+import javax.swing.*;
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+        MyIntegerClass int1= new MyIntegerClass(3);
+        MyDoubleClass doub1= new MyDoubleClass(3.14);
+        MyCharacterClass char1= new MyCharacterClass('a');
+        MyStringClass str1= new MyStringClass("A");
+        System.out.println(int1.getValue());
+        System.out.println(doub1.getValue());
+        System.out.println(char1.getValue());
+        System.out.println(str1.getValue());
+        /*
+        Imagine the work sb like me had to go through in making this.
+        Now imagine if you had to make such similar classes! What a pain!
+        Once again, look below for more efficiency.
+         */
+        System.out.println(" ");
+
+        OneSizeFitsAll<Integer> int2= new OneSizeFitsAll<>(3);
+        OneSizeFitsAll<Double> doub2= new OneSizeFitsAll<>(3.14);
+        OneSizeFitsAll<Character> char2= new OneSizeFitsAll<>('a');
+        OneSizeFitsAll<String> str2= new OneSizeFitsAll<>("A");
+        System.out.println(int2.getValue());
+        System.out.println(doub2.getValue());
+        System.out.println(char2.getValue());
+        System.out.println(str2.getValue());
+    }
+}
+//For OneSizeFitsAll.java
+/*
+About such generic classes...
+1. I may have only allowed this one to accept one thing, but you can do two or more generic variables.
+Just add them as you would variables here in the class, but then the objects made in Main.java should have syntax
+similar to making a hashmap.
+2. If you wanna make bounded types (make your genric class ) make a T/Thing of your choosing
+extend a class that only deals in certain data types. Like if you're only numerical data types,
+the thing should extend Number class.
+It may be dumb to copy a while program, but lemme use Bro Code's modifications to show how #1 and #2 work:
+public class MyGenericClass <Thing extends Number, Thing2 extends Number>
+{
+
+	Thing x;
+	Thing2 y;
+
+	MyGenericClass(Thing x, Thing2 y)
+	{
+		this.x = x;
+		this.y = y;
+	}
+
+	public Thing2 getValue()
+	{
+		return y;
+
+	}
+}
+ */
+
+public class OneSizeFitsAll<T>
+{
+    T x;
+    OneSizeFitsAll(T y)
+    {
+        this.x=y;
+    }
+
+    public T getValue ()
+    {
+        return x;
+    }
+}
+//For MyIntegerClass.java (Which will stand as an example for the other 3 classes quoted in Main.java for the less eficient method)
+public class MyIntegerClass
+{
+    Integer x;
+    MyIntegerClass(Integer y)
+    {
+        this.x=y;
+    }
+
+    public Integer getValue()
+    {
+        return x;
+    }
+}
