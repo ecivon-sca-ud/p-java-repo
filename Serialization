@@ -1,0 +1,65 @@
+//Under Serializer Project:
+//For Main.java
+import java.io.*;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        Users user1= new Users();
+
+        user1.name="Timmy Turner";
+         user1.password="amelborpradiaV";
+
+            FileOutputStream fileOut= new FileOutputStream("UserInfo.ser");
+            ObjectOutputStream out= new ObjectOutputStream(fileOut);
+            out.writeObject(user1);
+            out.close();
+            fileOut.close();
+
+            System.out.println("Your shit's saved, my G! :)");
+
+            long serialVersionUID= ObjectStreamClass.lookup(user1.getClass()).getSerialVersionUID();
+            System.out.println(serialVersionUID);
+    }
+}
+
+
+//For Serializer.java
+import java.io.Serializable;
+
+public class Users implements Serializable {
+    private static final long serialVersionUID=1;
+    String name;
+    transient String password;
+}
+
+
+//Under Deserializer Project:
+//For Main.java
+import java.io.*;
+
+public class Main {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+
+        Users user1= null;
+        FileInputStream fileIn= new FileInputStream("E:\\Serializer\\UserInfo.ser");
+        ObjectInputStream in= new ObjectInputStream(fileIn);
+        user1=(Users) in.readObject();
+        in.close();
+        fileIn.close();
+
+        System.out.println(user1.name);
+        System.out.println(user1.password);
+        long serialVersionUID= ObjectStreamClass.lookup(user1.getClass()).getSerialVersionUID();
+        System.out.println(serialVersionUID);
+    }
+}
+
+
+//For Deserializer.java
+import java.io.Serializable;
+
+public class Users implements Serializable {
+    private static final long serialVersionUID=1;
+    String name;
+    transient String password;
+}
