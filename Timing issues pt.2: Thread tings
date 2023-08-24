@@ -1,0 +1,68 @@
+//For Main.java
+import java.awt.*;
+import java.util.*;
+import java.util.Timer;
+import java.util.TimerTask;
+import javax.swing.*;
+
+public class Main
+{
+    public static void main(String[] args) throws InterruptedException {
+        /*System.out.println(Thread.activeCount());
+        //Tells you number of threads running.
+        System.out.println(Thread.currentThread().getName());
+        //Gets name of thread currently in use.
+        Thread.currentThread().setName("SupremeThread");
+        System.out.println(Thread.currentThread().getName());
+        //Notice how we can change the name of the thread we're on! Cool yea?
+        System.out.println(Thread.currentThread().getPriority());
+        //Gives you how high a given thread's priority is (ranges from 1 to 10).
+        Thread.currentThread().setPriority(10);
+        //Priority increases with number, so 1 is lowest priority and 10 highest.
+        System.out.println(Thread.currentThread().getPriority());
+        //Notice the change...
+        System.out.println(Thread.currentThread().isAlive());
+        //Typical boolean we can use to check on use or disuse of current thread...
+
+        for(int i=3; i>0;i--)
+        {
+            System.out.println(i);
+            Thread.sleep(1000);
+        }
+
+        System.out.println("You finished, my G!");
+        */
+
+        MyThread thread2= new MyThread();
+        System.out.println("Before starting: "+ thread2.isAlive());
+        thread2.start();
+        System.out.println("After starting: "+ thread2.isAlive());
+        System.out.println(thread2.getName());
+        thread2.setName("Thread#2");
+        System.out.println(thread2.getName());
+        System.out.println(thread2.getPriority());
+        thread2.setPriority(7);
+        System.out.println(thread2.getPriority());
+        System.out.println(thread2.activeCount());
+        System.out.println(thread2.isDaemon());
+        thread2.setDaemon(true);
+        System.out.println(thread2.isDaemon());
+    }
+}
+//For MyThread.java
+public class MyThread extends Thread
+{
+        @Override
+        public void run()
+        {
+                System.out.println("Thread is mimicking Murife!");
+                if(this.isDaemon())
+                {
+                        System.out.println("Thread is a daemon thread!");
+                }
+                else
+                {
+                        System.out.println("Thread is a user thread!");
+                }
+        }
+}
