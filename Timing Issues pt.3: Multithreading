@@ -1,0 +1,73 @@
+//For Main.java
+import java.awt.*;
+import java.util.*;
+import java.util.Timer;
+import java.util.TimerTask;
+import javax.swing.*;
+
+public class Main
+{
+    public static void main(String[] args) throws InterruptedException
+    {
+        MyThread thread1= new MyThread();
+        /*
+        Using good ol' method #1 of making multiple threads, making a class specifically for threads
+        which extends the existing Thread class.
+         */
+        MyRunnable runnable1= new MyRunnable();
+        Thread thread2= new Thread(runnable1);
+        /*
+        Method #2 immediately above is about using another class implementing the Runnable interface, which
+        has an override called run too, but with diffferences to the one in MyThread.
+         */
+        thread1.start();
+        thread1.join();
+        //Used to delay one thread, then start the other
+        thread2.start();
+    }
+}
+
+//For MyThread.java
+public class MyThread extends Thread
+{
+        /*
+        Here, we'lll use the thread to count backwards, from 10 through 1.
+         */
+        @Override
+        public void run()
+        {
+                for (int i=10;i>0;i--)
+                {
+                        System.out.println(i);
+                        try
+                        {
+                                Thread.sleep(1000);
+                        } catch (InterruptedException e)
+                        {
+                                throw new RuntimeException(e);
+                        }
+                }
+                System.out.println("There ends thread#1!");
+        }
+}
+//For Runnable.java
+public class MyRunnable implements Runnable
+{
+
+    @Override
+    public void run()
+    {
+        for (int i=0;i<10;i++)
+        {
+            System.out.println(i+1);
+            try
+            {
+                Thread.sleep(1000);
+            } catch (InterruptedException e)
+            {
+                throw new RuntimeException(e);
+            }
+        }
+        System.out.println("There ends thread#2!");
+    }
+}
