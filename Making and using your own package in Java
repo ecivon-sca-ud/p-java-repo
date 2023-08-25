@@ -1,0 +1,18 @@
+//For Main.java
+import Tools.ToolBox;
+import javax.swing.Icon;
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+        ToolBox tool1= new ToolBox();
+    }
+}
+//For ToolBox.java
+package Tools;
+
+public class ToolBox
+{
+    
+}
