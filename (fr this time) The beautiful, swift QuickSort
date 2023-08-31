@@ -1,0 +1,63 @@
+public class Main {
+    public static void main(String[] args) {
+
+        int[] array={6,8,2,4,3,9,7,1,5};
+        System.out.println("Before QuickSort...");
+        for(int i=0;i<array.length;i++) {
+            System.out.print(array[i]+" ");
+        }
+
+        System.out.println("");
+        System.out.println("");
+
+        quickSort(array,0,array.length-1);
+        System.out.println("After QuickSort!");
+        for(int i=0;i<array.length;i++) {
+            System.out.print(array[i]+" ");
+        }
+    }
+
+    private static void quickSort(int[]array, int mwanzo,int mwisho) {
+
+        //Base case below.
+        if(mwisho<=mwanzo){
+            return;
+        }
+
+        //Array splitting and recursive tings below.
+        int pivot= partition(array, mwanzo, mwisho);
+        quickSort(array,mwanzo,pivot-1);
+        /*
+        This part passes the left half. Notice the 2nd argument is the original array's first element,
+        while the 3rd argument is the element JUST before the pivot.
+         */
+        quickSort(array,pivot+1,mwisho);
+        /*
+        This part passes the rightt half. Notice the 2nd argument is the element RIGHT after the pivot,
+        while the 3rd argument is the original array's last element.
+         */
+
+    }
+
+    private static int partition(int[]array, int mwanzo,int mwisho) {
+        
+        int pivot= array[mwisho];
+        int i= (mwanzo-1);
+
+        for(int j=mwanzo;j<=(mwisho-1);j++) {
+            if(array[j]<pivot) {
+                i++;
+                int temp=array[i];
+                array[i]=array[j];
+                array[j]=temp;
+            }
+        }
+        i++;
+
+        int temp=array[i];
+        array[i]=array[mwisho];
+        array[mwisho]=temp;
+        
+        return i;
+    }
+}
