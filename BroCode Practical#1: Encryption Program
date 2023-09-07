@@ -1,0 +1,196 @@
+//For Main.java
+public class Main
+{
+    public static void main(String[] args)
+    {
+        Encryption enc1= new Encryption();
+    }
+}
+
+//For Encryption.java
+import java.util.*;
+
+
+public class Encryption
+{
+    private Scanner scanner1;
+    private Random random;
+    private ArrayList<Character>list;
+    private ArrayList<Character>shuffledList;
+    private char character;
+    private String line;
+    private char[] letters;
+    Encryption()
+    {
+        scanner1 = new Scanner(System.in);
+        random = new Random();
+        list = new ArrayList();
+        shuffledList = new ArrayList();
+        character= ' ';
+
+        newKey();
+        askQuestion();
+    }
+
+    private void askQuestion()
+    {
+        while(true)
+        {
+            System.out.println("---------------------------------------------------");
+            System.out.println("What do you wanna do?\nChoose from choices below:");
+            System.out.println("N=New Key, G=Get Key, E= Encrypt,D=Decrypt, Q=Quit");
+            char response=Character.toUpperCase(scanner1.nextLine().charAt(0));
+            switch(response)
+            {
+                case 'N':
+                    newKey();
+                    break;
+                case 'G':
+                    getKey();
+                    break;
+                case 'E':
+                    encryptKey();
+                    break;
+                case 'D':
+                    decryptKey();
+                    break;
+                case 'Q':
+                    tokaHapa();
+                    break;
+                default:
+                    System.out.println("Sorry, invalid input, try again.");
+                    break;
+            }
+        }
+    }
+
+    private void newKey()
+    {
+        /*
+        This method is used to clear anything you may have written previously as you receive the new key
+        you requested.
+         */
+        character=' ';
+        list.clear();
+        shuffledList.clear();
+
+        for(int i=32;i<127;i++)
+        {
+            list.add(Character.valueOf(character));
+            character++;
+        }
+
+        shuffledList= new ArrayList<>(list);
+        //Used to copy original list into arraylist used for shuffling.
+        Collections.shuffle(shuffledList);
+        /*
+        Recall that ArrayList is a type of collection. So, we can use the Collections class to shuffle it.
+        This class uses a special algorithm it has to do this.
+         */
+        System.out.println("You just generated a new key!");
+
+    }
+
+    private void getKey()
+    {
+        System.out.println("Here is your key: ");
+        //Used to show you list of all ASCII characters, form 32 to 127.
+        for(Character x:list)
+        {
+            System.out.print(x);
+        }
+
+        System.out.println(" ");
+
+        //Same idea as previous enhanced for loop, except now it's shuffled.
+        for(Character x:shuffledList)
+        {
+            System.out.print(x);
+        }
+
+        System.out.println(" ");
+    }
+
+    private void encryptKey()
+    {
+        System.out.println("Now enter the message you wish to encrypt and secure.");
+        String message= scanner1.nextLine();
+        letters= message.toCharArray();
+        for(int i=0; i<letters.length;i++)
+        /*
+        Outer for loop is for moving through the message we made.
+        More of the work is in the inner for loop though.
+        */
+        {
+            for(int j=0; j<list.size();j++)
+              /*
+              As for the inner for loop, it does the following:
+              1. Moves through original ordered list of ASCII characters.
+              (done by conditions set for loop)
+              2. Checks if a character in your message is the same as one in this ordered list.
+              (done by if statement in inner loop)
+              3. If it is, then the character in letters 'array' is replaced with the SHUFFLED equivalent
+              of the ASCII list.(done by statement in if statement)
+              */
+            {
+                if (letters[i] == list.get(j))
+                {
+                    letters[i] = shuffledList.get(j);
+                    break;
+                }
+            }
+        }
+        System.out.println("Your encrypted message is: ");
+        //This method will print out encryption generated earlier.
+        for(char x:letters)
+        {
+            System.out.print(x);
+        }
+        System.out.println("");
+    }
+
+    private void decryptKey()
+    {
+        System.out.println("Now copy the message you wish to decrypt and view.");
+
+        String message= scanner1.nextLine();
+        letters= message.toCharArray();
+        for(int i=0; i<letters.length;i++)
+        /*
+        Outer for loop is for moving through the message we had encrypted earlier.
+        More of the work is in the inner for loop though.
+        */
+        {
+            for(int j=0; j<shuffledList.size();j++)
+              /*
+              As for the inner for loop, it does the following:
+              1. Moves through shuffled list of ASCII characters.
+              (done by conditions set for loop)
+              2. Checks if a character in your message is the same as one in this 'disordered' list.
+              (done by if statement in inner loop)
+              3. If it is, then the character in letters 'array' is replaced with the NORMAL equivalent
+              of the ASCII list.(done by statement in if statement)
+              */
+            {
+                if (letters[i] == shuffledList.get(j))
+                {
+                    letters[i] = list.get(j);
+                    break;
+                }
+            }
+        }
+        System.out.println("Your original message is: ");
+        //This method will print out encryption generated earlier.
+        for(char x:letters)
+        {
+            System.out.print(x);
+        }
+        System.out.println("");
+    }
+
+    private void tokaHapa()
+    {
+        System.out.println("Thanks for using this program.\nHave a nice day.\nAs Levy Rozman would say, get outta here!");
+        System.exit(0);
+    }
+}
