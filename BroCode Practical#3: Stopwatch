@@ -1,0 +1,136 @@
+//For Main.java
+public class Main
+{
+    public static void main(String[] args)
+    {
+        new Stopwatch();
+    }
+}
+
+//For Stopwatch.java
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.event.ActionListener;
+import javax.swing.*;
+
+public class Stopwatch implements ActionListener
+{
+    JFrame frame1= new JFrame();
+    JButton startButton= new JButton("START");
+    JButton resetButton= new JButton("RESET");
+    JButton stopButton= new JButton("STOP");
+    JLabel label1= new JLabel();
+    int elapsedTime=3600000;
+    int seconds=0;
+    int minutes=0;
+    int hours=0;
+    //boolean started=false;
+    //Used to see if timer has started or nah.
+    String seconds_display=String.format("%02d",seconds);
+    String minutes_display=String.format("%02d",minutes);
+    String hours_display=String.format("%02d",hours);
+
+    Timer time= new Timer
+    (
+        1000, new ActionListener()
+    {
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            elapsedTime+=1000;
+            hours= (elapsedTime/3600000);
+            minutes=((elapsedTime/60000)%60);
+            //Dividing again by the modulo operator prevents us from having values like 60 min or even 61 min!
+            //Makes sense since 59%60==59, but 60%60==0!
+            seconds=(elapsedTime/1000)%60;
+            //Same idea with minutes.
+
+            seconds_display=String.format("%02d",seconds);
+            minutes_display=String.format("%02d",minutes);
+            hours_display=String.format("%02d",hours);
+
+            label1.setText(hours_display+":"+minutes_display+":"+seconds_display);
+        }
+    }
+    );
+
+    Stopwatch()
+    {
+        label1.setText(hours_display+":"+minutes_display+":"+seconds_display);
+        label1.setBounds(230,100,200,150);
+        label1.setFont(new Font("Verdana",Font.PLAIN,30));
+        label1.setBorder(BorderFactory.createBevelBorder(1));
+        label1.setOpaque(true);
+        label1.setHorizontalAlignment(JTextField.CENTER);
+
+        startButton.setBounds(100,260,150,50);
+        startButton.setFont(new Font("Ink Free",Font.PLAIN,25));
+        startButton.setFocusable(false);
+        startButton.addActionListener(this);
+
+        resetButton.setBounds(250,260,150,50);
+        resetButton.setFont(new Font("Ink Free",Font.PLAIN,25));
+        resetButton.setFocusable(false);
+        resetButton.addActionListener(this);
+
+        stopButton.setBounds(400,260,150,50);
+        stopButton.setFont(new Font("Ink Free",Font.PLAIN,25));
+        stopButton.setFocusable(false);
+        stopButton.addActionListener(this);
+
+        frame1.add(label1);
+        frame1.add(startButton);
+        frame1.add(stopButton);
+        frame1.add(resetButton);
+        frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame1.setSize(600,600);
+        frame1.setLayout(null);
+        frame1.setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e)
+    {
+        if(e.getSource()==startButton)
+        {
+            start();
+        }
+
+        if(e.getSource()==stopButton)
+        {
+            stop();
+        }
+
+        if(e.getSource()==resetButton)
+        {
+            reset();
+        }
+    }
+
+    void start()
+    {
+        time.start();
+    }
+
+    void stop()
+    {
+        time.stop();
+    }
+
+    void reset()
+    {
+        time.stop();
+
+        elapsedTime=0;
+        seconds=0;
+        minutes=0;
+        hours=0;
+
+        seconds_display=String.format("%02d",seconds);
+        minutes_display=String.format("%02d",minutes);
+        hours_display=String.format("%02d",hours);
+
+        label1.setText(hours_display+":"+minutes_display+":"+seconds_display);
+    }
+
+}
