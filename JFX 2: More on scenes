@@ -1,0 +1,115 @@
+package com.example.jfx1;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+
+public class HelloApplication extends Application {
+
+
+    public static void main(String[] args) {
+        launch(args);
+        /*
+        Static method in inherited Application class
+         */
+
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+
+        //Stage stage1= new Stage();
+        Group root= new Group();
+        //First, make most basic type of root node- a group.
+        Scene scene= new Scene(root, 800,800,Color.DARKCYAN);
+        //Then, add stage.
+        
+        //We shall begin adding mulitple shapes ot our scene as child nodes as observed below.
+        Text text1= new Text();
+        text1.setText("The beginning bruv!");
+        text1.setX(250);
+        text1.setY(250);
+        text1.setFont(Font.font("Comic Sans",40));
+        text1.setFill(Color.RED);
+
+
+        Line line1= new Line();
+        line1.setStartX(260);
+        line1.setStartY(260);
+        line1.setEndX(602);
+        line1.setEndY(260);
+        line1.setStrokeWidth(3);
+        line1.setStroke(Color.BLUE);
+        line1.setOpacity(1.6);
+        //This, apparently lets you make line translucent to the extent you'd like.
+
+        Rectangle rect1= new Rectangle();
+        rect1.setX(260);
+        rect1.setY(270);
+        rect1.setWidth(342);
+        rect1.setHeight(200);
+        rect1.setFill(Color.DARKGREEN);
+        //This is for the rectangel in general...
+        rect1.setStrokeWidth(4);
+        rect1.setStroke(Color.LIGHTGREEN);
+        //This is for the rectangle's OUTLINE.
+        
+        //Now to other shapes...
+        Polygon triangle1= new Polygon();
+        triangle1.getPoints().setAll
+                (
+                        0.0,220.0,
+                        431.0,0.0,
+                        855.0,220.0
+                );
+        triangle1.setFill(Color.WHITE);
+
+        Circle circle1= new Circle();
+        circle1.setCenterX(710);
+        circle1.setCenterY(375);
+        circle1.setRadius(100);
+        circle1.setFill(Color.GOLD);
+
+        Image icon= new Image("E:\\JFX1\\src\\main\\java\\card1.png");
+        //If you don't want default image, first make an object for image you wnat to use as app's icon...
+        /*
+        ImageView iv1= new ImageView(icon);
+        iv1.setX(800.0);
+        iv1.setX(600.0);
+        //If you'd like to add an image, this helps, but not necessary here.
+        */
+
+        stage.getIcons().add(icon);
+        //...then add image object made to stage.
+        stage.setTitle("Pick two cards,bro!");
+        //Sets GUI's title.
+        stage.setWidth(1000);
+        stage.setHeight(700);
+        
+        root.getChildren().add(triangle1);
+        root.getChildren().add(text1);
+        root.getChildren().add(line1);
+        root.getChildren().add(rect1);
+        root.getChildren().add(circle1);
+        //root.getChildren().add(iv1);
+        //Last few lines above are for adding chold nodes to root node.
+        
+        stage.setScene(scene);
+        //Then, add scene to stage.
+        stage.show();
+    }
+}
