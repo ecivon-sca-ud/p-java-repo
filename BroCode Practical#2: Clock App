@@ -1,0 +1,92 @@
+//For Main.java
+public class Main
+{
+    public static void main(String[] args)
+    {
+        new MyFrame();
+    }
+}
+
+//For MyFrame.java
+import javax.swing.*;
+import java.awt.*;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+public class MyFrame extends JFrame
+{
+    SimpleDateFormat formatOne;
+    SimpleDateFormat formatTwo;
+    SimpleDateFormat formatThree;
+    JLabel label1;
+    JLabel label2;
+    JLabel label3;
+    String time;
+    String day;
+    String date;
+
+    MyFrame()
+    {
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setTitle("Timo's Clock \"App\"");
+        this.setLayout(new FlowLayout());
+        this.setSize(400,300);
+        this.setResizable(false);
+
+        formatOne= new SimpleDateFormat("hh:mm:ss a");
+        //hh for hours, mm for minutes, ss for seconds and a for am||pm, depending on the situation.
+        formatTwo= new SimpleDateFormat("EEEE");
+        //That E in the constructor is used to pick the specific day of the week.
+        //Apparently, to spell it out fully, you need FOUR Es.
+        formatThree= new SimpleDateFormat("MM/dd/yyyy");
+
+        label1= new JLabel();
+        label1.setFont(new Font("Helvetica",Font.PLAIN,60));
+        label1.setForeground(Color.BLUE);
+        label1.setBackground(Color.BLACK);
+        //label1.setSize(new Dimension(600,100));
+        label1.setOpaque(true);
+
+        label2= new JLabel();
+        label2.setFont(new Font("Comic Sans",Font.PLAIN,55));
+        label2.setForeground(Color.BLUE);
+        label2.setBackground(Color.BLACK);
+        label2.setOpaque(true);
+
+        label3= new JLabel();
+        label3.setFont(new Font("Times New Roman",Font.PLAIN,55));
+        label3.setForeground(Color.BLUE);
+        label3.setBackground(Color.BLACK);
+        label3.setOpaque(true);
+
+        this.add(label1);
+        this.add(label2);
+        this.add(label3);
+        this.setVisible(true);
+
+        setTime();
+    }
+
+    public void setTime()
+    {
+        while(true)
+        {
+            time = formatOne.format(Calendar.getInstance().getTime());
+            label1.setText(time);
+
+            day = formatTwo.format(Calendar.getInstance().getTime());
+            label2.setText(day);
+
+            date = formatThree.format(Calendar.getInstance().getTime());
+            label3.setText(date);
+            try
+            {
+                Thread.sleep(1000);
+            }
+            catch(InterruptedException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+}
