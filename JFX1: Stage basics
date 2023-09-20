@@ -1,0 +1,61 @@
+package com.example.jfx1;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+
+public class HelloApplication extends Application {
+
+
+    public static void main(String[] args) {
+        launch(args);
+        /*
+        Static method in inherited Application class
+         */
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+
+        //Stage stage1= new Stage();
+        Group root= new Group();
+        //First, make most basic type of root node- a group.
+        Scene scene= new Scene(root, Color.DARKCYAN);
+        //Then, add stage.
+
+        Image icon= new Image("E:\\JFX1\\src\\main\\java\\card1.png");
+        //If you don't want default image, first make an object for image you wnat to use as app's icon...
+
+        stage.getIcons().add(icon);
+        //...then add image object made to stage.
+        stage.setTitle("Pick two cards,bro!");
+        stage.setWidth(300);
+        stage.setHeight(300);
+        //Interesting that it splits dimensions, unlike in Swing, which did this in one method. (.setSize())
+        
+        //stage.setFullScreen(true);
+        //Not fun but technically an option.
+        //stage.setFullScreenExitHint("Press q to get outta here!\nYeah, just like Vim, lol!");
+        //In case you want Vim vibes..
+        //stage.setFullScreenExitKeyCombination(KeyCombination.valueOf("q"));
+        //Now to actually make the hint true!
+        
+        stage.setResizable(false);
+        //In case you want the app to stay same size.
+        //stage.setX(200);
+        //stage.setY(200);
+        //Those last two lines of code would've told program where exactly to put our app on our screen.
+        //Since JavaFX usually centers it by default, though, you don't need this unless you specifically want it elsewhere.
+        //I don't, so I'll test 'em and comment them out.
+        stage.setScene(scene);
+        //Then, add scene to stage.
+        stage.show();
+    }
+}
