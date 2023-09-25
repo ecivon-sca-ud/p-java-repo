@@ -1,0 +1,158 @@
+//For HelloApplication.java
+package com.example.demo1;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+
+public class HelloApplication extends Application {
+    public static void main(String[] args) {
+        launch(args);
+        /*
+        Static method in inherited Application class
+         */
+    }
+
+    @Override
+    public void start(Stage stage)  {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("f1.fxml"));
+            //Now for showing file you wanna see first when ran.
+            stage.setTitle("Scene Builder, innit?");
+            Scene scene= new Scene(root);
+            //scene.getStylesheets().add(getClass().getResource("E:\\demo1\\src\\main\\resources\\com\\example\\demo1\\application.css").toExternalForm());
+            String css= this.getClass().getResource("application.css").toExternalForm();
+            scene.getStylesheets().add(css);
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+}
+
+
+
+//For SceneOneController.java
+package com.example.demo1;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+
+public class SceneOneController {
+    private Stage stage1;
+    private Scene scene1;
+    private Parent root;
+    @FXML
+    TextField nameTextField;
+
+
+    public void login(ActionEvent event) throws IOException {
+
+        String username= nameTextField.getText();
+        FXMLLoader loader= new FXMLLoader(getClass().getResource("f2.fxml")  );
+        root= loader.load();
+
+        SceneTwoController sceneTwoController= loader.getController();
+        sceneTwoController.displayName(username);
+        //root = FXMLLoader.load(getClass().getResource("f2.fxml"));
+        stage1= (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene1= new Scene(root);
+        stage1.setScene(scene1);
+        stage1.show();
+    }
+}
+
+
+//For SceneTwoController.java
+package com.example.demo1;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+
+public class SceneTwoController {
+  @FXML
+  Label nameLabel;
+
+  public void displayName(String name) {
+        nameLabel.setText("Hello "+name);
+  }
+
+}
+
+
+//For f1.fxml
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.SceneOneController">
+   <children>
+      <Label layoutX="88.0" layoutY="108.0" prefHeight="32.0" prefWidth="169.0" text="Enter Username">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <TextField fx:id="nameTextField" layoutX="257.0" layoutY="100.0">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </TextField>
+      <Button fx:id="loginButton" layoutX="300.0" layoutY="224.0" mnemonicParsing="false" onAction="#login" text="Login" />
+   </children>
+</AnchorPane>
+
+//For f2.fxml
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.SceneTwoController">
+   <children>
+      <Label fx:id="nameLabel" layoutX="134.0" layoutY="113.0" prefHeight="17.0" prefWidth="295.0" text="Hello, ">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
