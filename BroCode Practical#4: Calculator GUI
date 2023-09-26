@@ -1,0 +1,241 @@
+//Calculator Time!
+import javax.swing.*;
+import java.awt.*;
+import java.awt.Event;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class Calculator implements ActionListener
+{
+    JFrame frame;
+    JTextField textField;
+    //For seeing user input in calc
+    JButton[] numberButtons= new JButton[10];
+    //for digits zero through nine
+    JButton[] functionButtons= new JButton[9];
+    JButton addButton, subtractButton,prodButton,divButton;
+    //Buttons involved in basic mathematical operations...
+    JButton decimalButton,equalsButton,deleteButton,clearButton,negativeButton;
+    /*
+    Buttons involved in improving calculator continuity,
+    like delete for removing one character/digit at a time,
+    clear for chucking everything in the textfield,etc.
+     */
+    JPanel panel;
+    Font myFont= new Font("Ink Free",Font.ITALIC,35);
+    double num1=0;
+    double num2=0;
+    double answer=0;
+    char operator;
+    //Used to hold * || / || + || -
+
+    Calculator()
+    {
+        frame= new JFrame("Timo's Basic Calc");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(600,600);
+        frame.setLayout(null);
+
+        textField= new JTextField();
+        textField.setBounds(50,25,300,50);
+        textField.setFont(myFont);
+        textField.setEditable(false);
+
+        addButton= new JButton("+");
+        subtractButton= new JButton("-");
+        prodButton= new JButton("*");
+        divButton= new JButton("/");
+        decimalButton= new JButton(".");
+        equalsButton= new JButton("=");
+        deleteButton= new JButton("DEL");
+        clearButton= new JButton("CLR");
+        negativeButton= new JButton("(-)");
+
+        functionButtons[0]= addButton;
+        functionButtons[1]= subtractButton;
+        functionButtons[2]= prodButton;
+        functionButtons[3]= divButton;
+        functionButtons[4]= decimalButton;
+        functionButtons[5]= equalsButton;
+        functionButtons[6]= deleteButton;
+        functionButtons[7]= clearButton;
+        functionButtons[8]= negativeButton;
+
+        //Why add buttons to array? To make changing each's features more efficient, of course!
+        //Using for loops on each array, to make changes on each button swifter and more uniform, as observed below:
+
+        for(int i=0;i<9;i++)
+        {
+            functionButtons[i].addActionListener(this);
+            functionButtons[i].setFont(myFont);
+            functionButtons[i].setFocusable(false);
+        }
+        //First for loop deals with the functionality...
+
+        for(int j=0;j<10;j++)
+        {
+            numberButtons[j]= new JButton(String.valueOf(j));
+            //This line of code is what tells which button to display which number.
+            numberButtons[j].addActionListener(this);
+            numberButtons[j].setFont(myFont);
+            numberButtons[j].setFocusable(false);
+        }
+        //...and second for loop deals with digits zero through nine.
+
+        deleteButton.setBounds(150,430,145,50);
+        clearButton.setBounds(250,430,145,50);
+        negativeButton.setBounds(50,430,100,50);
+
+        panel= new JPanel();
+        panel.setBounds(50,100,300,300);
+        panel.setLayout(new GridLayout(4,4,15,15));
+        //panel.setBackground(Color.BLUE);
+        //This panel will be used for all the buttons that aren't clear or delete.
+        //Buttons will be added row byrow, as observed below:
+
+        panel.add(numberButtons[1]);
+        panel.add(numberButtons[2]);
+        panel.add(numberButtons[3]);
+        panel.add(addButton);
+        //Row#1
+
+        panel.add(numberButtons[4]);
+        panel.add(numberButtons[5]);
+        panel.add(numberButtons[6]);
+        panel.add(subtractButton);
+        //Row#2
+
+        panel.add(numberButtons[7]);
+        panel.add(numberButtons[8]);
+        panel.add(numberButtons[9]);
+        panel.add(prodButton);
+        //Row#3
+
+        panel.add(decimalButton);
+        panel.add(numberButtons[0]);
+        panel.add(equalsButton);
+        panel.add(divButton);
+        //Row#4
+
+        frame.add(panel);
+        /*
+        Imagine if I had to add all the 16 buttons above directly to the frame
+        (whose layout is null, mind you, meaning I'd have to LITERALLY calculate
+        where my calculator's buttons were being placed!). This is where the panel
+        comes in for more 
+         */
+        frame.add(negativeButton);
+        frame.add(deleteButton);
+        frame.add(clearButton);
+        frame.add(textField);
+        frame.setVisible(true);
+        /*
+        So far, the constructor has been used to, well, 'construct' how our calculator will LOOK like.
+        But how our calculator will WORK, making each button useful,
+        will be done from the overriden method we picked from the ActionListener interface.
+        Check it out just after main method!
+         */
+    }
+
+    public static void  main(String[] args)
+    {
+        //This is where the calc object is created.
+       Calculator calc= new Calculator();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e)
+    {
+        for(int k=0;k<10;k++)
+        {
+            if(e.getSource()==numberButtons[k])
+            {
+                textField.setText(textField.getText().concat(String.valueOf(k)));
+            }
+        }
+        //First for loop makes numbers get added to textfield.
+
+        if(e.getSource()==decimalButton)
+        {
+            textField.setText(textField.getText().concat(String.valueOf(".")));
+        }
+
+        if(e.getSource()==addButton)
+        {
+            num1= Double.parseDouble(textField.getText());
+            operator='+';
+            textField.setText(" ");
+        }
+
+        if(e.getSource()==subtractButton)
+        {
+            num1= Double.parseDouble(textField.getText());
+            operator='-';
+            textField.setText(" ");
+        }
+
+        if(e.getSource()==prodButton)
+        {
+            num1= Double.parseDouble(textField.getText());
+            operator='*';
+            textField.setText(" ");
+        }
+
+        if(e.getSource()==divButton)
+        {
+            num1= Double.parseDouble(textField.getText());
+            operator='/';
+            textField.setText(" ");
+        }
+
+        //Buttons for math ops sorted! Now to the rest..
+        if(e.getSource()==equalsButton)
+        {
+            num2= Double.parseDouble(textField.getText());
+            switch(operator)
+            {
+                case'+':
+                    answer= num1+num2;
+                    break;
+
+                case'-':
+                    answer= (num1-num2);
+                    break;
+
+                case'*':
+                    answer= (num1*num2);
+                    break;
+
+                case'/':
+                    answer= (num1/num2);
+                    break;
+            }
+            //Nice to use switch for ops buttons.
+            textField.setText(String.valueOf(answer));
+            num1=answer;
+        }
+
+        if(e.getSource()==clearButton)
+        {
+            textField.setText(" ");
+        }
+
+        if(e.getSource()==deleteButton)
+        {
+            String s1= textField.getText();
+            textField.setText(" ");
+            for(int l=0;(l<s1.length()-1);l++)
+            {
+                textField.setText(textField.getText()+s1.charAt(l));
+            }
+        }
+
+        if(e.getSource()==negativeButton)
+        {
+           double temp=Double.parseDouble(textField.getText());
+            temp*=-1;
+            //Makes number in question negative.No surprise there.
+            textField.setText(String.valueOf(temp));
+        }
+    }
+}
