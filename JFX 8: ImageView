@@ -1,0 +1,90 @@
+// For HelloApplication.java
+package com.example.jfx1;
+
+import javafx.application.Application;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+
+public class HelloApplication extends Application {
+    public static void main(String[] args) {
+        launch(args);
+        /*
+        Static method in inherited Application class
+         */
+    }
+
+    @Override
+    public void start(Stage stage)  {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
+            stage.setTitle("Scene Builder, innit?");
+            Scene scene= new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+}
+
+//For Controller.java
+package com.example.jfx1;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.Circle;
+
+public class Controller {
+    @FXML
+    ImageView myImageView;
+    @FXML
+    Button myButton;
+
+    Image myImage= new Image(getClass().getResourceAsStream("card2.png"));
+
+    public void displayImage() {
+        myImageView.setImage(myImage);
+        //Changes to next image when button is clicked
+    }
+}
+
+//For hello-view.fxml
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jfx1.Controller">
+   <children>
+      <ImageView fx:id="myImageView" fitHeight="150.0" fitWidth="186.0" layoutX="251.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@card1.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="myButton" layoutX="272.0" layoutY="286.0" mnemonicParsing="false" onAction="#displayImage" text="Button" />
+   </children>
+</AnchorPane>
+
