@@ -1,0 +1,51 @@
+//For Controller.java
+package com.example.jfx1;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.TextAlignment;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+public class Controller {
+
+    @FXML
+    private Pane pane1;
+    @FXML
+    private ColorPicker colorPicker1;
+
+    public void colorChange(ActionEvent event) {
+        Color color1= colorPicker1.getValue();
+        pane1.setBackground(new Background(new BackgroundFill(color1, CornerRadii.EMPTY, Insets.EMPTY)));
+    }
+}
+
+//For hello-view.fxml
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+
+<AnchorPane fx:id="pane1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jfx1.Controller">
+   <children>
+      <ColorPicker fx:id="colorPicker1" layoutX="248.0" layoutY="175.0" onAction="#colorChange">
+         <value>
+            <Color red="0.3552631437778473" green="0.7105262875556946" blue="0.4263157844543457" />
+         </value>
+      </ColorPicker>
+   </children>
+</AnchorPane>
+
