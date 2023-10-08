@@ -1,0 +1,67 @@
+//For Controller.java
+package com.example.jfx1;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.TextAlignment;
+
+public class Controller {
+
+    @FXML
+    private CheckBox myCheckBox1;
+    @FXML
+   private Label label1;
+    @FXML
+    private ImageView myImageView;
+    Image image1= new Image(getClass().getResourceAsStream("card1.png"));
+    Image image2= new Image(getClass().getResourceAsStream("card2.png"));
+    public void geuza(ActionEvent event) {
+        if(myCheckBox1.isSelected()) {
+            label1.setText("Pic1");
+            myImageView.setImage(image1);
+        }
+        else {
+            label1.setText("Pic2");
+            myImageView.setImage(image2);
+        }
+    }
+}
+
+//For hello-view.fxml
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jfx1.Controller">
+   <children>
+      <CheckBox fx:id="myCheckBox" layoutX="256.0" layoutY="350.0" mnemonicParsing="false" onAction="#geuza" prefHeight="26.0" prefWidth="118.0" text="SHIFTPIC">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </CheckBox>
+      <Label fx:id="label1" layoutX="271.0" layoutY="292.0" prefHeight="26.0" prefWidth="58.0" text="Pic2">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="myImageView" fitHeight="186.0" fitWidth="169.0" layoutX="185.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@card2.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
+
