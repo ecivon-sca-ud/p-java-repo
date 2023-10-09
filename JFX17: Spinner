@@ -1,0 +1,73 @@
+//For Controller.java
+package com.example.jfx1;
+
+import java.math.BigDecimal;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.TextAlignment;
+
+import java.math.BigDecimal;
+import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ResourceBundle;
+
+public class Controller implements Initializable {
+    @FXML
+    private Label label1;
+    @FXML
+    private Spinner<Integer> spinner1;
+
+    int currentValue;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        SpinnerValueFactory<Integer> valueFactory=
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(1,10);
+        valueFactory.setValue(1);
+        spinner1.setValueFactory(valueFactory);
+        currentValue= spinner1.getValue();
+        label1.setText(Integer.toString(currentValue));
+
+        spinner1.valueProperty().addListener(new ChangeListener<Integer>() {
+            @Override
+            public void changed(ObservableValue<? extends Integer> observableValue, Integer integer, Integer t1) {
+                currentValue= spinner1.getValue();
+                label1.setText(Integer.toString(currentValue));
+            }
+        });
+    }
+}
+
+//For hello-view.fxml
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="481.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jfx1.Controller">
+   <children>
+      <Label fx:id="label1" alignment="CENTER" layoutX="153.0" layoutY="123.0" prefHeight="32.0" prefWidth="316.0" text="Stuff Spinner will Display">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <Spinner fx:id="spinner1" editable="true" layoutX="182.0" layoutY="265.0" />
+   </children>
+</AnchorPane>
