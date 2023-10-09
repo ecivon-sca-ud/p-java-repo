@@ -1,0 +1,65 @@
+//For Controller.java
+package com.example.jfx1;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.TextAlignment;
+
+import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ResourceBundle;
+
+public class Controller implements Initializable {
+
+
+    @FXML
+    private ChoiceBox<String> choiceBox1;
+    @FXML
+    private Label label1;
+    String[] foods={"Chapo","Chipo", "Indomie","Ugali"};
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        choiceBox1.getItems().addAll(foods);
+        choiceBox1.setOnAction(this::getFood);
+    }
+
+    public void getFood(ActionEvent event) {
+        String foodChoix= choiceBox1.getValue();
+        label1.setText("You have chosen "+foodChoix+" .Enjoy!");
+    }
+}
+
+//For hello-view.fxml
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jfx1.Controller">
+   <children>
+      <ChoiceBox fx:id="choiceBox1" layoutX="231.0" layoutY="200.0" prefWidth="150.0" />
+      <Label fx:id="label1" alignment="CENTER" layoutY="122.0" prefHeight="32.0" prefWidth="600.0" text="Pick a food of choice.">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
+
