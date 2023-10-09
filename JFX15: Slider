@@ -1,0 +1,68 @@
+//For Controller.java
+package com.example.jfx1;
+
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.TextAlignment;
+
+import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ResourceBundle;
+
+public class Controller implements Initializable  {
+    @FXML
+    private Label label1;
+    @FXML
+    private Slider slider1;
+    int temperatureInCelsius;
+    
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        temperatureInCelsius= (int) slider1.getValue();
+        label1.setText(Integer.toString(temperatureInCelsius)+" °C");
+
+        slider1.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+                temperatureInCelsius= (int) slider1.getValue();
+                label1.setText(Integer.toString(temperatureInCelsius)+" °C");
+            }
+        });
+    }
+}
+
+//For hello-view.fxml
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="481.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jfx1.Controller">
+   <children>
+      <Label fx:id="label1" alignment="CENTER" layoutX="179.0" layoutY="378.0" prefHeight="32.0" prefWidth="220.0" text="Current Temperature">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <Slider fx:id="slider1" layoutX="211.0" layoutY="15.0" majorTickUnit="20.0" minorTickCount="10" orientation="VERTICAL" prefHeight="333.0" prefWidth="155.0" showTickLabels="true" showTickMarks="true" />
+   </children>
+</AnchorPane>
+
+
