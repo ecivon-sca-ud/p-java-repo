@@ -1,0 +1,85 @@
+//For Controller.java
+package com.example.jfx1;
+
+import javafx.animation.*;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.image.ImageView;
+import javafx.scene.transform.Rotate;
+import javafx.util.Duration;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class Controller implements Initializable {
+    @FXML
+    private ImageView iView1;
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        /*
+        TranslateTransition transition1= new TranslateTransition();
+        transition1.setNode(iView1);
+        transition1.setDuration(Duration.millis(1000));
+        transition1.setCycleCount(5);
+        transition1.setAutoReverse(true);
+        transition1.setByX(35);
+        transition1.setByY(-35);
+        transition1.play();
+        */
+
+        /*
+        RotateTransition transition2= new RotateTransition();
+        transition2.setNode(iView1);
+        transition2.setDuration(Duration.millis(500));
+        transition2.setCycleCount(21);
+        transition2.setByAngle(360);
+        transition2.setInterpolator(Interpolator.LINEAR);
+        transition2.setAxis(Rotate.X_AXIS);
+        transition2.setAutoReverse(true);
+        transition2.play();
+        */
+
+        /*
+        FadeTransition transition3= new FadeTransition();
+        transition3.setNode(iView1);
+        transition3.setDuration(Duration.millis(1000));
+        transition3.setCycleCount(21);
+        transition3.setInterpolator(Interpolator.LINEAR);
+        transition3.setFromValue(1);
+        transition3.setToValue(0);
+        transition3.play();
+
+         */
+
+        /*
+        ScaleTransition scaleUp= new ScaleTransition();
+        scaleUp.setNode(iView1);
+        scaleUp.setDuration(Duration.millis(1000));
+        scaleUp.setCycleCount(3);
+        scaleUp.setInterpolator(Interpolator.LINEAR);
+        scaleUp.setByX(1.5);
+        scaleUp.setByY(1.5);
+        scaleUp.play();
+         */
+    }
+}
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jfx1.Controller">
+   <children>
+      <ImageView fx:id="iView1" fitHeight="150.0" fitWidth="200.0" layoutX="14.0" layoutY="236.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@card1.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
