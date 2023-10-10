@@ -1,0 +1,142 @@
+//For Controller.java
+//Only pay attention to newMethod method. Nothing else is relevant to the menubar.
+package com.example.jfx1;
+
+import java.math.BigDecimal;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.TextAlignment;
+
+import java.math.BigDecimal;
+import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ResourceBundle;
+
+public class Controller implements Initializable {
+    @FXML
+    private Label label1;
+    @FXML
+    private ListView<String> listView;
+    @FXML
+            private TreeView<String> treeView;
+    String[] foods={"Chapo","Chipo"," Indomie","Ugali"};
+    String currentFood;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        //Root node-first oen  auser will see!
+        TreeItem<String> rootTing= new TreeItem<>("Files");
+
+        //Children to root nodes.
+        TreeItem<String> branchTing1= new TreeItem<>("Pictures");
+        TreeItem<String> branchTing2= new TreeItem<>("Weejios");
+        TreeItem<String> branchTing3= new TreeItem<>("Mursik");
+
+        //Children to children nodes.
+        TreeItem<String> leafTing1= new TreeItem<>("pic1");
+        TreeItem<String> leafTing2= new TreeItem<>("pic2");
+        TreeItem<String> leafTing3= new TreeItem<>("weejio1");
+        TreeItem<String> leafTing4= new TreeItem<>("weejio2");
+        TreeItem<String> leafTing5= new TreeItem<>("mursik1");
+        TreeItem<String> leafTing6= new TreeItem<>("mursik2");
+
+        branchTing1.getChildren().addAll(leafTing1,leafTing2);
+        branchTing2.getChildren().addAll(leafTing3,leafTing4);
+        branchTing3.getChildren().addAll(leafTing5,leafTing6);
+
+        rootTing.getChildren().addAll(branchTing1,branchTing2,branchTing3);
+
+        treeView.setRoot(rootTing);
+
+    }
+
+    public void chaguoNiLako() {
+        TreeItem<String> tingTing= treeView.getSelectionModel().getSelectedItem();
+        if(tingTing!= null) {
+            System.out.println(tingTing.getValue());
+        }
+
+    }
+    public void newMethod() {
+        System.out.println("Menu works.");
+    }
+}
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.CheckMenuItem?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioMenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="481.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jfx1.Controller">
+   <children>
+      <Label fx:id="label1" alignment="CENTER" layoutX="146.0" layoutY="435.0" prefHeight="32.0" prefWidth="316.0" text="Stuff Tied to ListView">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <TreeView fx:id="treeView" layoutX="84.0" layoutY="85.0" onContextMenuRequested="#chaguoNiLako" onMouseClicked="#chaguoNiLako" prefHeight="341.0" prefWidth="439.0" />
+      <MenuBar layoutY="-2.0" prefHeight="32.0" prefWidth="600.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#newMethod" text="Open">
+                     <accelerator>
+                        <KeyCodeCombination alt="DOWN" code="O" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Save" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="Sth">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Castle Queenside" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <CheckMenuItem mnemonicParsing="false" text="Premove" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <RadioMenuItem mnemonicParsing="false" text="A">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="Choices" />
+                     </toggleGroup>
+                  </RadioMenuItem>
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <RadioMenuItem mnemonicParsing="false" text="B" toggleGroup="$Choices" />
+              </items>
+            </Menu>
+          <Menu mnemonicParsing="false" text="Help, please!">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </children>
+</AnchorPane>
