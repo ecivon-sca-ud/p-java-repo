@@ -1,0 +1,9 @@
+No real coding here, just observations from BroCode's explanations:
+
+Looking at the FXML file shows that in ALL cases so far, we've been using an AnchorPane, which allows us to place components basically wherever we want.
+What if you wanted a more rigid layout though? Well enter the: FlowPane!
+This one makes ALL components within (no matter how much you attempt to place them differently) follow each other, either horizontally or vertically. 
+That can be set within SceneBuilder "Properties".
+Still within "Properties", you can state whether you want your components to start from top-left (typical),
+or from top-right, centre, centre-left, whatever your app needs for the situation
+Should you want a gap between your components, you go to "Layout" and choose HorizontalGap||Hgap  or VerticalGap||Vgap, depending on which orientation you chose earlier.
