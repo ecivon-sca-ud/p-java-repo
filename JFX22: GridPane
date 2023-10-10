@@ -1,0 +1,11 @@
+Again, no real coding here, just observations from BroCode's video:
+
+We're still looking at panes which are more rigid in nature than the AnchorPane we've been using all through. 
+The next one we'll briefly discuss is GridPane.
+
+In SceneBuilder, one can right click on the GridPane itself and add and delete rows and columns.
+Within "Layout", one can change the alignment of a node within a cell in the grid. 
+You can even change the node's dimensions, but its maximum will always be within the cell it's in.
+"Layout" also lets you change the width and height of each cell, which will also make the node change its dimensions accordingly(proportionally).
+In "Properties", you can tick "GridLines Visible" to, well, make the lines between each cell visible.
+Back to "Layout"- like in FlowPane, you can also change the horizontal and vertical gap between each cell as you see fit.
