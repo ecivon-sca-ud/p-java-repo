@@ -1,0 +1,432 @@
+//For Main.java
+import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        Scanner userDesires= new Scanner(System.in);
+        String password="123";
+        //Hardcoded password to check with to enter table-ordering system.
+        String typedPassword,woodChosen;
+        //One picks user's version of password, the other the type of wood they'd like out of the options chosen.
+        double length,width;
+        int numOfDrawers,numOfTables;
+        System.out.println("Enter password: ");
+        typedPassword=userDesires.nextLine();
+        //userDesires.nextLine();
+        if(typedPassword.compareTo(password)==0) {
+            System.out.println("Welcome to Antique Furniture Kenya Limited!");
+            System.out.println("Write whether you want mahogany,pine, or oak.");
+            woodChosen= userDesires.nextLine();
+            //userDesires.nextLine();
+            System.out.println("Great, now enter desired width.");
+            width= userDesires.nextDouble();
+
+            System.out.println("Great, now enter desired length.");
+            length= userDesires.nextDouble();
+
+            System.out.println("How many drawers do you want? 1st one's 2500, next five 2000 each.\nNo more than 6 though!");
+            numOfDrawers= userDesires.nextInt();
+            if( numOfDrawers > 6 ) {
+                System.out.println("Nothing negative or greater than 6 priss!\nStart over and don't exceed 6!");
+                System.exit(0);
+                //This terminates the program, preventing user from seeing GUI with faulty data
+                // with respect to the drawers, and by extension drawer cost.
+            }
+            else {
+                System.out.println("Great!Finally, how many tables would you like? If you buy more than one, it's a 5% discount!");
+            }
+            numOfTables=userDesires.nextInt();
+
+            /*
+            This switch statement controls which child class object we'll make based on user's input,
+            along with giving final price as output, which can be cross-checked with value  in GUI.
+             */
+            switch (woodChosen) {
+                case "Mahogany":
+                    CustomTable table1= new MahoganyTable(width,length,numOfDrawers,numOfTables);
+                    System.out.println("Final cost= "+table1.calculateTotalPrice());
+                    break;
+                case"Oak":
+                    CustomTable table2= new OakTable(width,length,numOfDrawers,numOfTables);
+                    System.out.println("Final cost= "+table2.calculateTotalPrice());
+                    break;
+                case "Pine":
+                    CustomTable table3= new PineTable(width,length,numOfDrawers,numOfTables);
+                    System.out.println("Final cost= "+table3.calculateTotalPrice());
+                    break;
+                default:
+                    System.out.println("Well, you put in data, but sorry, should've chosen a type of wood among choices given!\nSo no table for you!");
+                    break;
+            }
+        }
+        else {
+            System.out.println("Sorry, incorrect password.Try again.");
+            //Of course, this executes should user have gotten password wrong from earlier.
+        }
+    }
+}
+
+//For CustomTable.java
+public abstract class CustomTable {
+    /*
+    Notice variables below were made protected so that parent and child classes could freely use them
+    (eliminating the need to rewrite them in child classes) but are inaccessible to classes without such a relationship,
+    hence why I need to "redeclare" the relevant variables in the InvoiceFrame, for example.
+     */
+    protected double width,length;
+    protected double discount=calcluateDiscount();
+    protected String woodType;
+    protected int numOfDrawers,numOfTables;
+    protected double totalPrice= calculateTotalPrice();
+
+    /*
+    The constructor's job here is to pick whatever value each child class will pass to it later on.
+     */
+    CustomTable(double width,double length,String woodType,int numOfDrawers,int numOfTables) {
+        this.width = width;
+        this.length=length;
+        this.woodType= woodType;
+        this.numOfDrawers= numOfDrawers;
+        this.numOfTables=numOfTables;
+    }
+    /*
+    Everything that accounts for the components of the final price
+    (base price, total cost of drawers,discount if any, number of tables,...)
+    is made abstract so that each class is responsible for each component required.
+    Only the consolidated price is dealt with in its own method here in the table class.
+     */
+    public abstract double calculateBasePrice();
+    public abstract double calculateDrawerPrice();
+    public abstract double calculateWoodPrice();
+    public abstract double calcluateDiscount();
+
+    /*
+    As observed earlier, this is the only method fully defined here, which is fine
+    since it is based on the specific summation of the results of the abstract methods, already defined by
+    each corresponding child class.
+     */
+    public double calculateTotalPrice() {
+        double basePrice = calculateBasePrice();
+        double drawersPrice = calculateDrawerPrice();
+        double woodPrice = calculateWoodPrice();
+        if(numOfTables==1) {
+            return ((basePrice + drawersPrice + woodPrice));
+            //Returns total as is.
+        }
+        else {
+            return ((basePrice + drawersPrice + woodPrice) *(1 - discount) * numOfTables);
+            //returns initial total * number of tables * (1-0.05==0.95).
+        }
+    }
+}
+
+//For MahoganyTable.java
+class MahoganyTable extends CustomTable {
+    public MahoganyTable(double width, double length, int numOfDrawers,int numOfTables) {
+        /*
+        "Super" here takes the values involved to be reassigned to protected variables in CustomTable.
+        This is necessary to make the methods have the relevant values in each case to work with.
+         */
+        super(width, length, "Mahogany", numOfDrawers,numOfTables);
+        // Hardcoded "mahogany" as default wood type for the MahoganyTable.
+        new InvoiceFrame(woodType, length,width, numOfDrawers, numOfTables, discount, calculateTotalPrice());
+        //Takes relevant variables to GUI/Final Invoice.
+    }
+
+    @Override
+    public double calculateBasePrice() {
+        double area = width * length;
+        return (42500 +( Math.max(0, area - 9600) * 825));
+        //used Math.max() to get the maximum value ranging from zero to any positive number.
+        // This prevents negative numbers which could cause issues.
+    }
+
+    @Override
+    public double calculateWoodPrice() {
+        return 3000;
+    }
+    @Override
+    public double calculateDrawerPrice() {
+        double starterDrawerPrice = 2500;
+        double extraDrawerPrice = 2000;
+        if (numOfDrawers==0) {
+            return 0;
+            /*
+            Without this control, buying no drawer will incur the same cost as adding the first one(sh.2500),
+             which would also incorrectly affect the final price.
+             */
+        }
+        else {
+            return (starterDrawerPrice + (Math.max(0, numOfDrawers - 1) * extraDrawerPrice));
+            //used the same concept as above.
+            /*
+            Works since if user types 1, it's (2500+(1-1)*2000)=2500
+             */
+        }
+    }
+    @Override
+    public double calcluateDiscount() {
+        /*
+        This works since whether or not the 5% discount exists is tied to the number of tables the user wanted.
+         */
+        if(numOfTables==1) {
+            return 0;
+        }
+        else {
+            return 0.05;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//For OakTable.java
+public class OakTable extends CustomTable {
+    public OakTable(double width, double length, int numOfDrawers,int numOfTables) {
+         /*
+        "Super" here takes the values involved to be reassigned to protected variables in CustomTable.
+        This is necessary to make the methods have the relevant values in each case to work with.
+         */
+        super(width, length, "Oak", numOfDrawers,numOfTables);
+        // hardcoded "Oak" as default wood type for the OakTable
+        new InvoiceFrame(woodType, length,width, numOfDrawers, numOfTables, discount, calculateTotalPrice());
+        //Takes relevant variables to GUI/Final Invoice.
+    }
+
+    @Override
+    public double calculateBasePrice() {
+        double area = width * length;
+        return 42500 + Math.max(0, area - 9600) * 825;
+        //used Math.max() to get the maximum value ranging from zero to any positive number, this prevents negative numbers which could cause issues
+    }
+
+    @Override
+    public double calculateWoodPrice() {
+        return 2015;
+    }
+
+    @Override
+    public double calculateDrawerPrice() {
+        double starterDrawerPrice = 2500;
+        double extraDrawerPrice = 2000;
+        if (numOfDrawers==0) {
+            return 0;
+            /*
+            Without this control, buying no drawer will incur the same cost as adding the first one(sh.2500),
+             which would also incorrectly affect the final price.
+             */
+        }
+        else {
+            return (starterDrawerPrice + (Math.max(0, numOfDrawers - 1) * extraDrawerPrice));
+            //used the same concept as above.
+            /*
+            Works since if user types 1, it's (2500+(1-1)*2000)=2500
+             */
+        }
+    }
+    @Override
+    public double calcluateDiscount() {
+         /*
+        This works since whether or not the 5% discount exists is tied to the number of tables the user wanted.
+         */
+        if(numOfTables==1) {
+            return 0;
+        }
+        else {
+            return 0.05;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//For PineTable.java
+public class PineTable extends CustomTable {
+    public PineTable(double width, double length, int numOfDrawers,int numOfTables) {
+         /*
+        "Super" here takes the values involved to be reassigned to protected variables in CustomTable.
+        This is necessary to make the methods have the relevant values in each case to work with.
+         */
+        super(width, length, "Pine", numOfDrawers,numOfTables);
+        // hardcoded "Pine" as default wood type for the PineTable.
+        new InvoiceFrame(woodType, length,width, numOfDrawers, numOfTables, discount, calculateTotalPrice());
+        //Takes relevant variables to GUI/Final Invoice.
+    }
+
+    @Override
+    public double calculateBasePrice() {
+        double area = width * length;
+        return 42500 + Math.max(0, area - 9600) * 825;
+        //used Math.max() to get the maximum value ranging from zero to any positive number, this prevents negative numbers which could cause issues
+    }
+
+    @Override
+    public double calculateWoodPrice() {
+        return 0;
+    }
+
+    @Override
+    public double calculateDrawerPrice() {
+        double starterDrawerPrice = 2500;
+        double extraDrawerPrice = 2000;
+        if (numOfDrawers==0) {
+            return 0;
+            /*
+            Without this control, buying no drawer will incur the same cost as adding the first one(sh.2500),
+             which would also incorrectly affect the final price.
+             */
+        }
+        else {
+            return (starterDrawerPrice + (Math.max(0, numOfDrawers - 1) * extraDrawerPrice));
+            //used the same concept as above.
+            /*
+            Works since if user types 1, it's (2500+(1-1)*2000)=2500
+             */
+        }
+    }
+    @Override
+    public double calcluateDiscount() {
+         /*
+        This works since whether or not the 5% discount exists is tied to the number of tables the user wanted.
+         */
+        if(numOfTables==1) {
+            return 0;
+        }
+        else {
+            return 0.05;
+        }
+    }
+}
+
+//For InvoiceFrame.java
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+public class InvoiceFrame extends JFrame implements ActionListener {
+    private String woodType;
+    private double tableLength,tableWidth,discount,tablePrice;
+    private int drawerNumber,tableNumber;
+    JLabel label1,label2,label3,label4,label5,label6,label7,slot1,slot2,slot3,slot4,slot5,slot6;
+    JButton button1;
+
+    InvoiceFrame() {}
+    InvoiceFrame(String woodType,double tableLength,double tableWidth,int drawerNumber,int tableNumber,double discount,double tablePrice) {
+        this.woodType=woodType;
+        this.tableLength=tableLength;
+        this.tableWidth=tableWidth;
+        this.drawerNumber=drawerNumber;
+        this.tableNumber=tableNumber;
+        this.discount=discount;
+        this.tablePrice=tablePrice;
+
+        if(tableNumber==1) {
+            discount=0;
+            this.discount=discount;
+        }
+        if(tableLength==0 && tableWidth==0) {
+            tableLength=120;
+            tableWidth=80;
+        }
+
+        this.setTitle("Antique Furniture Kenya Limited: Final Invoice For Tables");
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLayout(new GridLayout(7,2));
+        this.setSize(600,600);
+
+        label1= new JLabel("WOOD TYPE?");
+        label2= new JLabel("LENGTH");
+        label3= new JLabel("WIDTH");
+        label4= new JLabel("NUMBER OF DRAWERS");
+        label5= new JLabel("NUMBER OF TABLES");
+        label6= new JLabel("DISCOUNT(%)");
+        label7= new JLabel("TOTAL PRICE");
+
+        slot1= new JLabel();
+        slot2= new JLabel();
+        slot3= new JLabel();
+        slot4= new JLabel();
+        slot5= new JLabel();
+        slot6= new JLabel();
+
+        button1= new JButton("Click to Get Report");
+        button1.addActionListener(this);
+
+        this.add(label1);
+        this.add(button1);
+        this.add(label2);
+        this.add(slot1);
+        this.add(label3);
+        this.add(slot2);
+        this.add(label4);
+        this.add(slot3);
+        this.add(label5);
+        this.add(slot4);
+        this.add(label6);
+        this.add(slot5);
+        this.add(label7);
+        this.add(slot6);
+        this.setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if( e.getSource() == button1) {
+            label1.setText("WOOD TYPE :"+woodType.toUpperCase());
+            slot1.setText("" +tableLength);
+            slot2.setText(""+tableWidth);
+            slot3.setText(""+drawerNumber);
+            slot4.setText(""+tableNumber);
+            slot5.setText(""+(discount*100));
+            slot6.setText(""+String.format("%.2f",(this.tablePrice)));
+        }
+    }
+}
