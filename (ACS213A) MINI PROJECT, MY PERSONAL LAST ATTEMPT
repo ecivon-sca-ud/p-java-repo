@@ -1,0 +1,328 @@
+//For Main.java
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        /*
+        Our main method will only deal with passwords and making a more general table.
+         */
+        Scanner customerTypes= new Scanner(System.in);
+        String oGPassword="123";
+        String woodType,password;
+        System.out.println("Enter password required for access to table-making services.");
+        password=customerTypes.nextLine();
+        if(password.compareTo(oGPassword)==0) {
+            System.out.println("Welcome to Antique Furniture Kenya Limited!");
+            System.out.println("What kind of wood should your table(s) be?");
+            System.out.println("You may choose from mahogany(starting at sh.45500),\nor oak(starting at sh.44515),\nor pine (starting at sh.42500).");
+            woodType=customerTypes.nextLine();
+            /*
+            This Table object will be used, based on user's choice,
+            to lead to the corresponding final cost of a mahogany, oak, or pine table.
+             */
+            Table zerothTable= new Table(woodType) {
+                @Override
+                public void woodPrice() {}
+            };
+        }
+        else {
+            System.out.println("Sorry, incorrect.Try again.");
+        }
+    }
+}
+
+//For Table.java
+import java.util.Scanner;
+
+public abstract class Table {
+    private double tableCost=42500;
+    private double initialArea=9600;
+    private double drawerCost;
+    private String userPreference;
+    private double tableLength,tableWidth;
+    private int drawerNumber,tableNumber;
+    private String woodChoix;
+    Table() {
+    }
+    Table(String woodChoix) {
+        System.out.println("About this chosen table...\nIts default cost is sh. "+tableCost);
+        System.out.println("But this will first vary with the size you wish for the table.");
+
+        //First section modifies table's price with respect to area...
+        System.out.println("If you want the default (120x80) squared cm size, type \"yes\", else type \"no\".");
+        Scanner userDesires= new Scanner(System.in);
+        userPreference=userDesires.nextLine();
+
+
+        if(userPreference.equalsIgnoreCase("Yes")) {
+            System.out.println("Aight so default cost of sh. "+tableCost+" remains true for you.");
+            tableLength=120;
+            tableWidth=80;
+        }
+
+        else if(userPreference.equalsIgnoreCase("No")) {
+            System.out.println("New size huh?Okay, enter new desired length.");
+            tableLength=userDesires.nextInt();
+            System.out.println("Now enter new desired width.");
+            tableWidth=userDesires.nextInt();
+            System.out.println("Table's new area = "+ (tableLength*tableWidth) +" squared cm.");
+            System.out.println("Each extra square cm to table's area adds sh.825 to final cost.");
+            tableCost=( tableCost + ( ( (tableLength*tableWidth) - (initialArea) ) * 825) );
+            System.out.println("Your table's cost now stands at sh." +tableCost);
+            userDesires.nextLine();
+        }
+
+        else {
+            System.out.println("Type yes or no ONLY,please!!");
+        }
+        //End of area problems.
+
+        //Now let's get how many drawers this person wants if any.
+        System.out.println("Price also varies based on number of drawers.\nSo, you know, let's jump to drawer problems now...");
+        System.out.println("Would you want drawers or not?");
+        System.out.println("Once again,type \"yes\" if you do, else type \"no\" if you don't.");
+        userPreference=userDesires.nextLine();
+
+        if(userPreference.equalsIgnoreCase("Yes")) {
+            System.out.println("Nice! First drawer is sh.2500, while the other 5 permitted ones are sh.2000 each.");
+            System.out.println("Aight, how many drawers would you like?\n(NB:Strictly no more than six,please.)");
+            drawerNumber= userDesires.nextInt();
+            if(drawerNumber>0 && drawerNumber<7) {
+                drawerCost=((2500) + ( (drawerNumber-1) * 2000) );
+                System.out.println("Total drawer cost= sh. " + drawerCost );
+                tableCost = tableCost + drawerCost;
+            }
+            else {
+                System.out.println("We said maximum was 6,did we not?");
+            }
+        }
+
+        else if(userPreference.equalsIgnoreCase("No")) {
+            System.out.println("No drawers,huh? No problem.\nInvoice approaching...");
+        }
+
+        else {
+            System.out.println("Type yes or no ONLY,please!!");
+        }
+        //We're done with drawers. Now to see final price.
+
+        System.out.println("Given table length of "+tableLength + " cm...");
+        System.out.println("...and width of "+ tableWidth + " cm...");
+        System.out.println("...and number of drawers chosen=  "+drawerNumber);
+        System.out.println("...your table (without considering wood type) is now sh. "+tableCost);
+        System.out.println("Now, do you want just one of these tables or more? Type number desired");
+        tableNumber=userDesires.nextInt();
+        if(tableNumber==1) {
+            System.out.println("Aight so total remains sh. "+this.tableCost);
+            //new InvoiceFrame(userPreference,tableLength,tableWidth,drawerNumber,tableNumber,discount,this.tableCost);
+        }
+        else if(tableNumber>1) {
+            System.out.println("Nice, many! Thanks for buying many. Let's finish this...");
+        }
+
+        else {
+            System.out.println("Please review input-can't be zero or negative number!");
+        }
+
+        this.woodChoix=woodChoix;
+        if(this.woodChoix.equalsIgnoreCase("Mahogany") ) {
+            MahoganyTable expensiveTable= new MahoganyTable(woodChoix,tableLength,tableWidth,drawerNumber,tableCost,tableNumber);
+        }
+
+        else if(this.woodChoix.equalsIgnoreCase("Oak") ) {
+            OakTable oakTable1= new OakTable(woodChoix,tableLength,tableWidth,drawerNumber,tableCost,tableNumber);
+        }
+
+        else if(this.woodChoix.equalsIgnoreCase("Pine") ) {
+            PineTable cheapTable= new PineTable(woodChoix,tableLength,tableWidth,drawerNumber,tableCost,tableNumber);
+        }
+
+        else{
+            System.out.println("Something's wrong, I can feel it...");
+        }
+    }
+    public abstract void woodPrice();
+}
+
+//For MahoganyTable.java
+public class MahoganyTable extends Table {
+    private String userPreference;
+    private double tableLength,tableWidth;
+    private int drawerNumber,tableNumber;
+    private double tableCost;
+    private double tableIncrement=3000;
+    private double discount=0.05;
+    MahoganyTable() {}
+    MahoganyTable(String userPreference,double tableLength,double tableWidth, int drawerNumber,double tableCost,int tableNumber) {
+        this.userPreference=userPreference;
+        this.drawerNumber=drawerNumber;
+        this.tableCost=tableCost;
+        this.tableNumber=tableNumber;
+        System.out.println("Table's final cost, seeing as it being mahogany makes it sh.3000 more, is sh.  "+(this.tableCost+tableIncrement));
+        woodPrice();
+    }
+    @Override
+    public void woodPrice() {
+        if(tableNumber>1) {
+            this.tableCost=((tableCost+tableIncrement)*(tableNumber*0.95));
+            System.out.println("Seeing as you wished for "+tableNumber + " tables, you'd have paid sh. "+(this.tableCost/0.95) +
+                    "\nHowever, for multiple tables, the final cost is 5% less,making it sh. "+this.tableCost);
+            new InvoiceFrame(userPreference,tableLength,tableWidth,drawerNumber,tableNumber,discount,(this.tableCost));
+        }
+        else {
+            this.tableCost=tableCost+tableIncrement;
+            System.out.println("So, yes, the final cost of single table is still sh. "+this.tableCost);
+            new InvoiceFrame(userPreference,tableLength,tableWidth,drawerNumber,tableNumber,discount,this.tableCost);
+        }
+    }
+}
+
+//For OakTable.java
+public class OakTable extends Table {
+    private String userPreference;
+    private double tableLength,tableWidth;
+    private int drawerNumber,tableNumber;
+    private double tableCost;
+    private double tableIncrement=2015;
+    private double discount=0.05;
+    OakTable() {}
+    OakTable(String userPreference,double tableLength,double tableWidth, int drawerNumber,double tableCost,int tableNumber) {
+        this.userPreference=userPreference;
+        this.drawerNumber=drawerNumber;
+        this.tableCost=tableCost;
+        this.tableNumber=tableNumber;
+        System.out.println("Table's final cost, seeing as it being oak makes it sh.3000 more, is sh.  "+(this.tableCost+tableIncrement));
+        woodPrice();
+    }
+    @Override
+    public void woodPrice() {
+        if(tableNumber>1) {
+            this.tableCost=((tableCost+tableIncrement)*(tableNumber*0.95));
+            System.out.println("Seeing as you wished for "+tableNumber + " tables, you'd have paid sh. "+String.format("%.2f",(this.tableCost/0.95)) +
+                    "\nHowever, for multiple tables, the final cost is 5% less,making it sh. "+String.format("%.2f",(this.tableCost)));
+            new InvoiceFrame(userPreference,tableLength,tableWidth,drawerNumber,tableNumber,discount,this.tableCost);
+        }
+        else {
+            this.tableCost=tableCost+tableIncrement;
+            System.out.println("So, yes, the final cost of single table is still sh. "+this.tableCost);
+            new InvoiceFrame(userPreference,tableLength,tableWidth,drawerNumber,tableNumber,discount,this.tableCost);
+        }
+    }
+}
+
+//For PineTable.java
+public class PineTable extends Table {
+    private double tableLength,tableWidth;
+    private int drawerNumber,tableNumber;
+    private double tableCost=42500;
+    private double discount=0.05;
+    private String userPreference;
+
+    PineTable(){}
+    PineTable(String userPreference,double tableLength,double tableWidth, int drawerNumber,double tableCost,int tableNumber) {
+        this.userPreference=userPreference;
+        this.drawerNumber=drawerNumber;
+        this.tableCost=tableCost;
+        this.tableNumber=tableNumber;
+        System.out.println("Lucky for you, this is pine so no increment. Cost remains sh. "+this.tableCost);
+        woodPrice();
+    }
+    @Override
+    public void woodPrice() {
+        if(tableNumber>1) {
+            this.tableCost=( (tableCost) * (tableNumber) * (0.95));
+            System.out.println("Seeing as you wished for "+tableNumber + " tables, you'd have paid sh. "+(this.tableCost/0.95) +
+                    "\nHowever, for multiple tables, the final cost is 5% less,making it sh. "+this.tableCost);
+            new InvoiceFrame(userPreference,tableLength,tableWidth,drawerNumber,tableNumber,discount,this.tableCost);
+        }
+        else {
+            this.tableCost=tableCost;
+            System.out.println("So, yes, the final cost of single table is still sh. "+this.tableCost);
+            new InvoiceFrame(userPreference,tableLength,tableWidth,drawerNumber,tableNumber,discount,this.tableCost);
+        }
+    }
+}
+
+//For InvoiceFrame.java
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+public class InvoiceFrame extends JFrame implements ActionListener {
+    private String woodType;
+    private double tableLength,tableWidth,discount,tablePrice;
+    private int drawerNumber,tableNumber;
+    JLabel label1,label2,label3,label4,label5,label6,label7,slot1,slot2,slot3,slot4,slot5,slot6;
+    JButton button1;
+
+    InvoiceFrame() {}
+    InvoiceFrame(String woodType,double tableLength,double tableWidth,int drawerNumber,int tableNumber,double discount,double tablePrice) {
+        if(tableNumber==1) {
+            discount=0;
+        }
+
+        if(tableLength==0 && tableWidth==0) {
+            tableLength=120;
+            tableWidth=80;
+        }
+
+        this.woodType=woodType;
+        this.tableLength=tableLength;
+        this.tableWidth=tableWidth;
+        this.drawerNumber=drawerNumber;
+        this.tableNumber=tableNumber;
+        this.discount=discount;
+        this.tablePrice=tablePrice;
+
+        this.setTitle("Antique Furniture Kenya Limited: Final Invoice For Tables");
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLayout(new GridLayout(7,2));
+        this.setSize(600,600);
+
+        label1= new JLabel("WOOD TYPE?");
+        label2= new JLabel("LENGTH");
+        label3= new JLabel("WIDTH");
+        label4= new JLabel("NUMBER OF DRAWERS");
+        label5= new JLabel("NUMBER OF TABLES");
+        label6= new JLabel("DISCOUNT(%)");
+        label7= new JLabel("TOTAL PRICE");
+        slot1= new JLabel();
+        slot2= new JLabel();
+        slot3= new JLabel();
+        slot4= new JLabel();
+        slot5= new JLabel();
+        slot6= new JLabel();
+
+        button1= new JButton("Click to Get Report");
+        button1.addActionListener(this);
+
+        this.add(label1);
+        this.add(button1);
+        this.add(label2);
+        this.add(slot1);
+        this.add(label3);
+        this.add(slot2);
+        this.add(label4);
+        this.add(slot3);
+        this.add(label5);
+        this.add(slot4);
+        this.add(label6);
+        this.add(slot5);
+        this.add(label7);
+        this.add(slot6);
+        this.setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if( e.getSource() == button1) {
+            label1.setText("WOOD TYPE :"+woodType.toUpperCase());
+            slot1.setText("" +tableLength);
+            slot2.setText(""+tableWidth);
+            slot3.setText(""+drawerNumber);
+            slot4.setText(""+tableNumber);
+            slot5.setText(""+(discount*100));
+            slot6.setText(""+String.format("%.2f",(this.tablePrice)));
+        }
+    }
+}
